@@ -1,0 +1,152 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mailermine"
+version = "1.0.0"
+description = "Official MailerMine SDK for Python."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "MailerMine", email = "support@mailermine.com" },
+]
+keywords = [
+    "mailermine",
+    "email",
+    "transactional",
+    "sdk",
+    "python",
+    "api",
+    "campaigns",
+    "webhooks",
+    "analytics",
+    "marketing",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Email",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.11",
+    "python-dateutil>=2.8.2",
+    "typing-extensions>=4.7.1",
+    "urllib3>=2.1.0,<3.0.0",
+]
+
+[project.urls]
+Homepage = "https://mailermine.com"
+Documentation = "https://mailermine.com/docs"
+Repository = "https://github.com/rahulyadav5192/mailermine-sdk-python"
+Issues = "https://github.com/rahulyadav5192/mailermine-sdk-python/issues"
+Changelog = "https://github.com/rahulyadav5192/mailermine-sdk-python/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+    "build>=1.2",
+    "hatchling>=1.25",
+    "mypy>=1.15",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.11",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/mailermine",
+    "/generated/mailermine_generated",
+    "/LICENSE",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/pyproject.toml",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["mailermine"]
+only-include = ["mailermine"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"generated/mailermine_generated" = "mailermine_generated"
+
+[tool.hatch.build]
+artifacts = []
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["mailermine", "tests", "scripts", "examples"]
+extend-exclude = ["generated"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "UP",
+    "SIM",
+    "RUF",
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+"examples/**" = ["T201", "E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unreachable = true
+pretty = true
+show_error_codes = true
+packages = ["mailermine"]
+exclude = ["(?x)(^generated/)"]
+
+[[tool.mypy.overrides]]
+module = [
+    "mailermine_generated.*",
+    "generated.*",
+]
+ignore_errors = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["generated"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+]
+filterwarnings = [
+    "error",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["mailermine"]
+omit = ["generated/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 0

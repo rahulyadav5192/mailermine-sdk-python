@@ -1,0 +1,20 @@
+# CampaignRecipientStatus
+
+
+## Enum
+
+* `QUEUED` (value: `'queued'`)
+
+* `SENDING` (value: `'sending'`)
+
+* `SENT` (value: `'sent'`)
+
+* `DELIVERED` (value: `'delivered'`)
+
+* `FAILED` (value: `'failed'`)
+
+* `SKIPPED` (value: `'skipped'`)
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
