@@ -154,6 +154,7 @@ NODE_PUBLIC_API: dict[str, tuple[str, ...]] = {
         "replay",
         "retry",
         "verify",
+        "verifyHeaders",
     ),
     "suppressions": ("list", "get", "add", "remove", "restore", "check"),
     "imports": ("list", "create", "status", "configure", "start", "cancel"),
@@ -219,7 +220,7 @@ def test_total_parity_counts() -> None:
     actual_total = sum(len(_public_methods(cls)) for cls in RESOURCE_CLASSES.values())
     assert len(NODE_PUBLIC_API) == 18
     assert len(RESOURCE_CLASSES) == 18
-    assert expected_total == 173
+    assert expected_total == 174
     assert actual_total == expected_total
 
 

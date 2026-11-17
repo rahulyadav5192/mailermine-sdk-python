@@ -9,6 +9,8 @@ from urllib.parse import urlparse
 
 from mailermine.constants import (
     DEFAULT_BASE_URL,
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_MAX_RETRY_DELAY,
     DEFAULT_TIMEOUT,
     DEFAULT_USER_AGENT,
 )
@@ -28,18 +30,39 @@ class Configuration:
         Request timeout in seconds.
     user_agent:
         ``User-Agent`` header value.
+    max_retries:
+        Automatic retries for 429/502/503/504 and transport errors (0 disables).
+        Email sends carry an ``Idempotency-Key``, so a retry never sends twice.
+    max_retry_delay:
+        Longest single wait between retries, in seconds. A 429 asking to wait
+        longer raises :class:`~mailermine.RateLimitError` instead.
     """
 
     api_key: str
     base_url: str = DEFAULT_BASE_URL
     timeout: float = DEFAULT_TIMEOUT
     user_agent: str = DEFAULT_USER_AGENT
+    max_retries: int = DEFAULT_MAX_RETRIES
+    max_retry_delay: float = DEFAULT_MAX_RETRY_DELAY
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "api_key", _normalize_api_key(self.api_key))
         object.__setattr__(self, "base_url", _normalize_base_url(self.base_url))
         object.__setattr__(self, "timeout", _normalize_timeout(self.timeout))
         object.__setattr__(self, "user_agent", _normalize_user_agent(self.user_agent))
+        if (
+            not isinstance(self.max_retries, int)
+            or isinstance(self.max_retries, bool)
+            or self.max_retries < 0
+        ):
+            raise ValueError("MailerMine Configuration max_retries must be a non-negative integer.")
+        if (
+            not isinstance(self.max_retry_delay, (int, float))
+            or isinstance(self.max_retry_delay, bool)
+            or self.max_retry_delay < 0
+        ):
+            raise ValueError("MailerMine Configuration max_retry_delay must be zero or greater.")
+        object.__setattr__(self, "max_retry_delay", float(self.max_retry_delay))
 
     @classmethod
     def create(
@@ -49,6 +72,8 @@ class Configuration:
         base_url: str | None = None,
         timeout: float | None = None,
         user_agent: str | None = None,
+        max_retries: int | None = None,
+        max_retry_delay: float | None = None,
     ) -> Configuration:
         """Build configuration from explicit values and environment variables.
 
@@ -105,6 +130,14 @@ class Configuration:
             base_url=str(resolved_base_url),
             timeout=float(resolved_timeout),
             user_agent=user_agent if user_agent is not None else DEFAULT_USER_AGENT,
+            max_retries=(
+                max_retries
+                if max_retries is not None
+                else int(os.environ.get("MAILERMINE_MAX_RETRIES", DEFAULT_MAX_RETRIES))
+            ),
+            max_retry_delay=(
+                max_retry_delay if max_retry_delay is not None else DEFAULT_MAX_RETRY_DELAY
+            ),
         )
 
     @classmethod
@@ -126,20 +159,28 @@ class Configuration:
         base_url = values.get("base_url", values.get("baseUrl"))
         timeout = values.get("timeout")
         user_agent = values.get("user_agent", values.get("userAgent"))
+        max_retries = values.get("max_retries", values.get("maxRetries"))
+        max_retry_delay = values.get("max_retry_delay", values.get("maxRetryDelay"))
         return cls.create(
             api_key=str(api_key) if api_key is not None else None,
             base_url=str(base_url) if isinstance(base_url, str) else None,
             timeout=float(timeout) if isinstance(timeout, (int, float)) else None,
             user_agent=str(user_agent) if isinstance(user_agent, str) else None,
+            max_retries=int(max_retries) if isinstance(max_retries, int) else None,
+            max_retry_delay=(
+                float(max_retry_delay) if isinstance(max_retry_delay, (int, float)) else None
+            ),
         )
 
-    def to_dict(self) -> dict[str, str | float]:
+    def to_dict(self) -> dict[str, str | float | int]:
         """Return a plain snapshot of the resolved configuration."""
         return {
             "api_key": self.api_key,
             "base_url": self.base_url,
             "timeout": self.timeout,
             "user_agent": self.user_agent,
+            "max_retries": self.max_retries,
+            "max_retry_delay": self.max_retry_delay,
         }
 
 

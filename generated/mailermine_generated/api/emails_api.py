@@ -15,6 +15,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from pydantic import Field, StrictStr
+from typing import Optional
+from typing_extensions import Annotated
 from mailermine_generated.models.send_email_request import SendEmailRequest
 from mailermine_generated.models.send_email_response import SendEmailResponse
 
@@ -40,6 +43,7 @@ class EmailsApi:
     def send_email(
         self,
         send_email_request: SendEmailRequest,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,6 +63,8 @@ class EmailsApi:
 
         :param send_email_request: (required)
         :type send_email_request: SendEmailRequest
+        :param idempotency_key: Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -83,6 +89,7 @@ class EmailsApi:
 
         _param = self._send_email_serialize(
             send_email_request=send_email_request,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -92,13 +99,13 @@ class EmailsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "SendEmailResponse",
             '422': "InlineObject1",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '429': "InlineObject",
             '500': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -115,6 +122,7 @@ class EmailsApi:
     def send_email_with_http_info(
         self,
         send_email_request: SendEmailRequest,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,6 +142,8 @@ class EmailsApi:
 
         :param send_email_request: (required)
         :type send_email_request: SendEmailRequest
+        :param idempotency_key: Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -158,6 +168,7 @@ class EmailsApi:
 
         _param = self._send_email_serialize(
             send_email_request=send_email_request,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -167,13 +178,13 @@ class EmailsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "SendEmailResponse",
             '422': "InlineObject1",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '429': "InlineObject",
             '500': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -190,6 +201,7 @@ class EmailsApi:
     def send_email_without_preload_content(
         self,
         send_email_request: SendEmailRequest,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -209,6 +221,8 @@ class EmailsApi:
 
         :param send_email_request: (required)
         :type send_email_request: SendEmailRequest
+        :param idempotency_key: Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -233,6 +247,7 @@ class EmailsApi:
 
         _param = self._send_email_serialize(
             send_email_request=send_email_request,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -242,13 +257,13 @@ class EmailsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "SendEmailResponse",
             '422': "InlineObject1",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '429': "InlineObject",
             '500': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +275,7 @@ class EmailsApi:
     def _send_email_serialize(
         self,
         send_email_request,
+        idempotency_key,
         _request_auth,
         _content_type,
         _headers,
@@ -283,6 +299,8 @@ class EmailsApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if idempotency_key is not None:
+            _header_params['Idempotency-Key'] = idempotency_key
         # process the form parameters
         # process the body parameter
         if send_email_request is not None:

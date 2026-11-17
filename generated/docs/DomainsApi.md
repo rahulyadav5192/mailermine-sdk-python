@@ -1,6 +1,6 @@
 # mailermine_generated.DomainsApi
 
-All URIs are relative to *http://127.0.0.1:8000/api/v1*
+All URIs are relative to *https://mailermine.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -29,10 +29,10 @@ from mailermine_generated.models.domain_response import DomainResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -87,11 +87,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Domain created with DNS records. |  * X-RateLimit-Limit - Maximum requests per window. <br>  * X-RateLimit-Remaining - Requests remaining in the current window. <br>  * X-RateLimit-Reset - Unix timestamp when the current window resets. <br>  |
+**409** | Request conflicts with current state. |  -  |
 **400** | Malformed JSON or invalid request. |  -  |
 **401** | Missing or invalid API key. |  -  |
 **403** | Account suspended, feature denied, or cross-project access blocked. |  -  |
 **404** | Resource not found. |  -  |
-**409** | Request conflicts with current state. |  -  |
 **422** | Validation failed or plan limit exceeded. |  -  |
 **429** | Rate limit exceeded. Retry after the &#x60;Retry-After&#x60; header value. |  -  |
 **500** | Unexpected server error. |  -  |
@@ -115,10 +115,10 @@ from mailermine_generated.models.delete_response import DeleteResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -173,12 +173,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Domain deleted successfully. |  * X-RateLimit-Limit - Maximum requests per window. <br>  * X-RateLimit-Remaining - Requests remaining in the current window. <br>  * X-RateLimit-Reset - Unix timestamp when the current window resets. <br>  |
+**422** | Validation failed or plan limit exceeded. |  -  |
 **400** | Malformed JSON or invalid request. |  -  |
 **401** | Missing or invalid API key. |  -  |
 **403** | Account suspended, feature denied, or cross-project access blocked. |  -  |
 **404** | Resource not found. |  -  |
 **409** | Request conflicts with current state. |  -  |
-**422** | Validation failed or plan limit exceeded. |  -  |
 **429** | Rate limit exceeded. Retry after the &#x60;Retry-After&#x60; header value. |  -  |
 **500** | Unexpected server error. |  -  |
 
@@ -201,10 +201,10 @@ from mailermine_generated.models.domain_response import DomainResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -287,10 +287,10 @@ from mailermine_generated.models.domain_list_response import DomainListResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -383,10 +383,10 @@ from mailermine_generated.models.domain_response import DomainResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters

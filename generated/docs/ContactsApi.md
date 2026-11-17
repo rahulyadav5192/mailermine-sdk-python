@@ -1,6 +1,6 @@
 # mailermine_generated.ContactsApi
 
-All URIs are relative to *http://127.0.0.1:8000/api/v1*
+All URIs are relative to *https://mailermine.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -33,10 +33,10 @@ from mailermine_generated.models.bulk_delete_contacts200_response import BulkDel
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -120,10 +120,10 @@ from mailermine_generated.models.bulk_restore_contacts200_response import BulkRe
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -207,10 +207,10 @@ from mailermine_generated.models.bulk_update_contacts_request import BulkUpdateC
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -294,10 +294,10 @@ from mailermine_generated.models.create_contact_request import CreateContactRequ
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -380,10 +380,10 @@ from mailermine_generated.models.delete_response import DeleteResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -466,10 +466,10 @@ from mailermine_generated.models.contact_response import ContactResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -552,10 +552,10 @@ from mailermine_generated.models.contact_collection import ContactCollection
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -670,10 +670,10 @@ from mailermine_generated.models.contact_response import ContactResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -757,10 +757,10 @@ from mailermine_generated.models.update_contact_request import UpdateContactRequ
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters

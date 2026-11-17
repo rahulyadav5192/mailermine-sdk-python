@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, cast
 
 from mailermine_generated import EventsApi, MessagesApi
 
@@ -118,7 +118,7 @@ class Events(BaseResource):
         return self.execute(
             lambda: to_collection(
                 self._messages.message_events(
-                    message=message_id,
+                    message=cast(Any, message_id),  # UUID string; validated by the API client
                     _request_timeout=self._timeout,
                 )
             )
@@ -179,7 +179,7 @@ class Events(BaseResource):
         return self.execute(
             lambda: to_response(
                 self._messages.get_message(
-                    message=message_id,
+                    message=cast(Any, message_id),  # UUID string; validated by the API client
                     _request_timeout=self._timeout,
                 )
             )

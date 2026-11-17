@@ -333,7 +333,7 @@ class EventsApi:
         source: Annotated[Optional[StrictStr], Field(description="Filter by event source.")] = None,
         campaign: Annotated[Optional[UUID], Field(description="Filter by campaign UUID.")] = None,
         message: Annotated[Optional[UUID], Field(description="Filter by message UUID.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient and payload.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient.")] = None,
         var_from: Annotated[Optional[datetime], Field(description="Filter events on or after this ISO-8601 date.")] = None,
         to: Annotated[Optional[datetime], Field(description="Filter events on or before this ISO-8601 date.")] = None,
         per_page: Annotated[Optional[StrictInt], Field(description="Items per page (default 25).")] = None,
@@ -362,7 +362,7 @@ class EventsApi:
         :type campaign: UUID
         :param message: Filter by message UUID.
         :type message: UUID
-        :param search: Free-text search across recipient and payload.
+        :param search: Free-text search across recipient.
         :type search: str
         :param var_from: Filter events on or after this ISO-8601 date.
         :type var_from: datetime
@@ -436,7 +436,7 @@ class EventsApi:
         source: Annotated[Optional[StrictStr], Field(description="Filter by event source.")] = None,
         campaign: Annotated[Optional[UUID], Field(description="Filter by campaign UUID.")] = None,
         message: Annotated[Optional[UUID], Field(description="Filter by message UUID.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient and payload.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient.")] = None,
         var_from: Annotated[Optional[datetime], Field(description="Filter events on or after this ISO-8601 date.")] = None,
         to: Annotated[Optional[datetime], Field(description="Filter events on or before this ISO-8601 date.")] = None,
         per_page: Annotated[Optional[StrictInt], Field(description="Items per page (default 25).")] = None,
@@ -465,7 +465,7 @@ class EventsApi:
         :type campaign: UUID
         :param message: Filter by message UUID.
         :type message: UUID
-        :param search: Free-text search across recipient and payload.
+        :param search: Free-text search across recipient.
         :type search: str
         :param var_from: Filter events on or after this ISO-8601 date.
         :type var_from: datetime
@@ -539,7 +539,7 @@ class EventsApi:
         source: Annotated[Optional[StrictStr], Field(description="Filter by event source.")] = None,
         campaign: Annotated[Optional[UUID], Field(description="Filter by campaign UUID.")] = None,
         message: Annotated[Optional[UUID], Field(description="Filter by message UUID.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient and payload.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Free-text search across recipient.")] = None,
         var_from: Annotated[Optional[datetime], Field(description="Filter events on or after this ISO-8601 date.")] = None,
         to: Annotated[Optional[datetime], Field(description="Filter events on or before this ISO-8601 date.")] = None,
         per_page: Annotated[Optional[StrictInt], Field(description="Items per page (default 25).")] = None,
@@ -568,7 +568,7 @@ class EventsApi:
         :type campaign: UUID
         :param message: Filter by message UUID.
         :type message: UUID
-        :param search: Free-text search across recipient and payload.
+        :param search: Free-text search across recipient.
         :type search: str
         :param var_from: Filter events on or after this ISO-8601 date.
         :type var_from: datetime

@@ -1,6 +1,6 @@
 # mailermine_generated.EmailsApi
 
-All URIs are relative to *http://127.0.0.1:8000/api/v1*
+All URIs are relative to *https://mailermine.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **send_email**
-> SendEmailResponse send_email(send_email_request)
+> SendEmailResponse send_email(send_email_request, idempotency_key=idempotency_key)
 
 Send email
 
@@ -25,10 +25,10 @@ from mailermine_generated.models.send_email_response import SendEmailResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -46,10 +46,11 @@ with mailermine_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = mailermine_generated.EmailsApi(api_client)
     send_email_request = mailermine_generated.SendEmailRequest() # SendEmailRequest | 
+    idempotency_key = 'order-1042-receipt' # str | Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours. (optional)
 
     try:
         # Send email
-        api_response = api_instance.send_email(send_email_request)
+        api_response = api_instance.send_email(send_email_request, idempotency_key=idempotency_key)
         print("The response of EmailsApi->send_email:\n")
         pprint(api_response)
     except Exception as e:
@@ -64,6 +65,7 @@ with mailermine_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **send_email_request** | [**SendEmailRequest**](SendEmailRequest.md)|  | 
+ **idempotency_key** | **str**| Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours. | [optional] 
 
 ### Return type
 
@@ -82,15 +84,15 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Message accepted and queued. |  * X-RateLimit-Limit - Maximum requests per window. <br>  * X-RateLimit-Remaining - Requests remaining in the current window. <br>  * X-RateLimit-Reset - Unix timestamp when the current window resets. <br>  |
+**202** | Message accepted and queued. |  * Idempotent-Replayed - Present and &#x60;true&#x60; when the response was replayed for a repeated Idempotency-Key. <br>  * X-RateLimit-Limit - Maximum requests per window. <br>  * X-RateLimit-Remaining - Requests remaining in the current window. <br>  * X-RateLimit-Reset - Unix timestamp when the current window resets. <br>  |
 **422** | Validation failed or plan limit exceeded. |  -  |
+**409** | Request conflicts with current state. |  -  |
 **400** | Malformed JSON or invalid request. |  -  |
 **401** | Missing or invalid API key. |  -  |
 **403** | Account suspended, feature denied, or cross-project access blocked. |  -  |
 **429** | Rate limit exceeded. Retry after the &#x60;Retry-After&#x60; header value. |  -  |
 **500** | Unexpected server error. |  -  |
 **404** | Resource not found. |  -  |
-**409** | Request conflicts with current state. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

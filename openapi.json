@@ -6,12 +6,12 @@
         "description": "MailerMine API \u2014 send email and manage projects, API keys, domains, templates, contacts, audiences, and delivery data.",
         "license": {
             "name": "MailerMine API License",
-            "url": "http://127.0.0.1:8000/legal/terms"
+            "url": "https://mailermine.com/terms"
         }
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/v1",
+            "url": "https://mailermine.com/api/v1",
             "description": "MailerMine API v1"
         }
     ],
@@ -5525,7 +5525,8 @@
                         "required": true,
                         "description": "The message UUID",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -5760,6 +5761,9 @@
                             }
                         }
                     },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
@@ -5771,9 +5775,6 @@
                     },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/Conflict"
                     },
                     "422": {
                         "$ref": "#/components/responses/ValidationError"
@@ -5922,6 +5923,9 @@
                             }
                         }
                     },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationError"
+                    },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
@@ -5936,9 +5940,6 @@
                     },
                     "409": {
                         "$ref": "#/components/responses/Conflict"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/ValidationError"
                     },
                     "429": {
                         "$ref": "#/components/responses/RateLimited"
@@ -6053,6 +6054,17 @@
                 "tags": [
                     "Emails"
                 ],
+                "parameters": [
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "description": "Optional unique key (max 255 chars). Retrying with the same key and body returns the original response instead of sending again; the same key with a different body returns 422. Keys are kept for 24 hours.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "order-1042-receipt"
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6100,6 +6112,13 @@
                             }
                         },
                         "headers": {
+                            "Idempotent-Replayed": {
+                                "description": "Present and `true` when the response was replayed for a repeated Idempotency-Key.",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "true"
+                            },
                             "X-RateLimit-Limit": {
                                 "description": "Maximum requests per window.",
                                 "schema": {
@@ -6123,6 +6142,9 @@
                     "422": {
                         "$ref": "#/components/responses/ValidationError"
                     },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
@@ -6140,9 +6162,6 @@
                     },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/Conflict"
                     }
                 }
             }
@@ -6195,7 +6214,7 @@
                     {
                         "name": "search",
                         "in": "query",
-                        "description": "Free-text search across recipient and payload.",
+                        "description": "Free-text search across recipient.",
                         "schema": {
                             "type": "string"
                         }
@@ -7417,7 +7436,8 @@
                         "required": true,
                         "description": "The message UUID",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -7452,14 +7472,14 @@
                             }
                         }
                     },
-                    "404": {
-                        "$ref": "#/components/responses/NotFound"
-                    },
                     "401": {
                         "$ref": "#/components/responses/Unauthorized"
                     },
                     "403": {
                         "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "429": {
                         "$ref": "#/components/responses/RateLimited"
@@ -7860,7 +7880,7 @@
             },
             "delete": {
                 "operationId": "deleteProject",
-                "description": "Soft-delete a project. Deletion is blocked while active domains, queued messages, or active campaigns remain. Required scope: `projects.write`.",
+                "description": "Deactivate a project (status becomes inactive). Related data such as API keys, domains, and campaigns is kept. Deletion is blocked while queued messages or active campaigns remain. Required scope: `projects.write`.",
                 "summary": "Delete project",
                 "tags": [
                     "Projects"
@@ -13611,6 +13631,11 @@
                                 "projects.write",
                                 "api_keys.read",
                                 "api_keys.write",
+                                "webhooks.read",
+                                "webhooks.write",
+                                "suppressions.read",
+                                "suppressions.write",
+                                "events.read",
                                 "admin"
                             ]
                         }
@@ -13642,6 +13667,11 @@
                                 "projects.write",
                                 "api_keys.read",
                                 "api_keys.write",
+                                "webhooks.read",
+                                "webhooks.write",
+                                "suppressions.read",
+                                "suppressions.write",
+                                "events.read",
                                 "admin"
                             ]
                         }
@@ -13710,6 +13740,11 @@
                                 "projects.write",
                                 "api_keys.read",
                                 "api_keys.write",
+                                "webhooks.read",
+                                "webhooks.write",
+                                "suppressions.read",
+                                "suppressions.write",
+                                "events.read",
                                 "admin"
                             ]
                         }
@@ -13736,6 +13771,11 @@
                                 "projects.write",
                                 "api_keys.read",
                                 "api_keys.write",
+                                "webhooks.read",
+                                "webhooks.write",
+                                "suppressions.read",
+                                "suppressions.write",
+                                "events.read",
                                 "admin"
                             ]
                         }
@@ -15712,7 +15752,7 @@
                             "array",
                             "null"
                         ],
-                        "description": "Provider/event metadata. @var array<string, mixed>|null",
+                        "description": "Customer-safe event details. @var array<string, mixed>|null",
                         "items": {}
                     },
                     "occurred_at": {
@@ -18422,7 +18462,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "Project lifecycle status. @var 'active'|'archived' @example active"
+                        "description": "Project lifecycle status. @var 'active'|'archived'|'inactive' @example active"
                     },
                     "settings": {
                         "type": "array",
@@ -18921,10 +18961,12 @@
             },
             "TemplateLayoutStyle": {
                 "type": "string",
+                "description": "| |\n|---|\n| `classic` <br/>  |\n| `modern` <br/>  |\n| `minimal` <br/>  |\n| `none` <br/> Email Studio / full custom HTML \u2014 no auto header/footer chrome. |",
                 "enum": [
                     "classic",
                     "modern",
-                    "minimal"
+                    "minimal",
+                    "none"
                 ],
                 "title": "TemplateLayoutStyle"
             },
@@ -19257,7 +19299,7 @@
                     },
                     "payload": {
                         "type": "array",
-                        "description": "Provider-specific payload.",
+                        "description": "Customer-safe event details. Never includes raw provider infrastructure metadata.",
                         "items": {}
                     },
                     "occurred_at": {
@@ -19550,9 +19592,6 @@
                         ]
                     }
                 },
-                "required": [
-                    "rules"
-                ],
                 "title": "UpdateSegmentRequest"
             },
             "UpdateTagRequest": {

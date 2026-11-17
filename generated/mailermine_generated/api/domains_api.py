@@ -97,11 +97,11 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DomainResponse",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
             '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
@@ -172,11 +172,11 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DomainResponse",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
             '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
@@ -247,11 +247,11 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DomainResponse",
+            '409': "InlineObject",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
-            '409': "InlineObject",
             '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
@@ -395,12 +395,12 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteResponse",
+            '422': "InlineObject1",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
             '409': "InlineObject",
-            '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
         }
@@ -470,12 +470,12 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteResponse",
+            '422': "InlineObject1",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
             '409': "InlineObject",
-            '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
         }
@@ -545,12 +545,12 @@ class DomainsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteResponse",
+            '422': "InlineObject1",
             '400': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
             '404': "InlineObject",
             '409': "InlineObject",
-            '422': "InlineObject1",
             '429': "InlineObject",
             '500': "InlineObject",
         }

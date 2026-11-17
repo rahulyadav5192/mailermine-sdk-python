@@ -1,6 +1,6 @@
 # mailermine_generated.EventsApi
 
-All URIs are relative to *http://127.0.0.1:8000/api/v1*
+All URIs are relative to *https://mailermine.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,10 +25,10 @@ from mailermine_generated.models.event_response import EventResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -111,10 +111,10 @@ from mailermine_generated.models.event_list_response import EventListResponse
 from mailermine_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:8000/api/v1
+# Defining the host is optional and defaults to https://mailermine.com/api/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = mailermine_generated.Configuration(
-    host = "http://127.0.0.1:8000/api/v1"
+    host = "https://mailermine.com/api/v1"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -135,7 +135,7 @@ with mailermine_generated.ApiClient(configuration) as api_client:
     source = 'transactional' # str | Filter by event source. (optional)
     campaign = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Filter by campaign UUID. (optional)
     message = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Filter by message UUID. (optional)
-    search = 'search_example' # str | Free-text search across recipient and payload. (optional)
+    search = 'search_example' # str | Free-text search across recipient. (optional)
     var_from = '2013-10-20T19:20:30+01:00' # datetime | Filter events on or after this ISO-8601 date. (optional)
     to = '2013-10-20T19:20:30+01:00' # datetime | Filter events on or before this ISO-8601 date. (optional)
     per_page = 25 # int | Items per page (default 25). (optional)
@@ -160,7 +160,7 @@ Name | Type | Description  | Notes
  **source** | **str**| Filter by event source. | [optional] 
  **campaign** | **UUID**| Filter by campaign UUID. | [optional] 
  **message** | **UUID**| Filter by message UUID. | [optional] 
- **search** | **str**| Free-text search across recipient and payload. | [optional] 
+ **search** | **str**| Free-text search across recipient. | [optional] 
  **var_from** | **datetime**| Filter events on or after this ISO-8601 date. | [optional] 
  **to** | **datetime**| Filter events on or before this ISO-8601 date. | [optional] 
  **per_page** | **int**| Items per page (default 25). | [optional] 
