@@ -360,7 +360,7 @@ class ProjectsApi:
     ) -> DeleteResponse:
         """Delete project
 
-        Soft-delete a project. Deletion is blocked while active domains, queued messages, or active campaigns remain. Required scope: `projects.write`.
+        Deactivate a project (status becomes inactive). Related data such as API keys, domains, and campaigns is kept. Deletion is blocked while queued messages or active campaigns remain. Required scope: `projects.write`.
 
         :param project: Project UUID. (required)
         :type project: UUID
@@ -435,7 +435,7 @@ class ProjectsApi:
     ) -> ApiResponse[DeleteResponse]:
         """Delete project
 
-        Soft-delete a project. Deletion is blocked while active domains, queued messages, or active campaigns remain. Required scope: `projects.write`.
+        Deactivate a project (status becomes inactive). Related data such as API keys, domains, and campaigns is kept. Deletion is blocked while queued messages or active campaigns remain. Required scope: `projects.write`.
 
         :param project: Project UUID. (required)
         :type project: UUID
@@ -510,7 +510,7 @@ class ProjectsApi:
     ) -> RESTResponseType:
         """Delete project
 
-        Soft-delete a project. Deletion is blocked while active domains, queued messages, or active campaigns remain. Required scope: `projects.write`.
+        Deactivate a project (status becomes inactive). Related data such as API keys, domains, and campaigns is kept. Deletion is blocked while queued messages or active campaigns remain. Required scope: `projects.write`.
 
         :param project: Project UUID. (required)
         :type project: UUID

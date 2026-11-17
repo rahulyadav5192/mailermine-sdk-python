@@ -19,6 +19,7 @@ from datetime import datetime
 from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
+from uuid import UUID
 from mailermine_generated.models.message_detail_response import MessageDetailResponse
 from mailermine_generated.models.message_events_response import MessageEventsResponse
 from mailermine_generated.models.message_list_response import MessageListResponse
@@ -44,7 +45,7 @@ class MessagesApi:
     @validate_call
     def get_message(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -63,7 +64,7 @@ class MessagesApi:
         Retrieve a single message by UUID with delivery timeline events.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -119,7 +120,7 @@ class MessagesApi:
     @validate_call
     def get_message_with_http_info(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -138,7 +139,7 @@ class MessagesApi:
         Retrieve a single message by UUID with delivery timeline events.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -194,7 +195,7 @@ class MessagesApi:
     @validate_call
     def get_message_without_preload_content(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -213,7 +214,7 @@ class MessagesApi:
         Retrieve a single message by UUID with delivery timeline events.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -736,7 +737,7 @@ class MessagesApi:
     @validate_call
     def message_events(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -755,7 +756,7 @@ class MessagesApi:
         Retrieve lifecycle events for a single message.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -788,9 +789,9 @@ class MessagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageEventsResponse",
-            '404': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
+            '404': "InlineObject",
             '429': "InlineObject",
             '400': "InlineObject",
             '409': "InlineObject",
@@ -811,7 +812,7 @@ class MessagesApi:
     @validate_call
     def message_events_with_http_info(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -830,7 +831,7 @@ class MessagesApi:
         Retrieve lifecycle events for a single message.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -863,9 +864,9 @@ class MessagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageEventsResponse",
-            '404': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
+            '404': "InlineObject",
             '429': "InlineObject",
             '400': "InlineObject",
             '409': "InlineObject",
@@ -886,7 +887,7 @@ class MessagesApi:
     @validate_call
     def message_events_without_preload_content(
         self,
-        message: Annotated[StrictStr, Field(description="The message UUID")],
+        message: Annotated[UUID, Field(description="The message UUID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -905,7 +906,7 @@ class MessagesApi:
         Retrieve lifecycle events for a single message.
 
         :param message: The message UUID (required)
-        :type message: str
+        :type message: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -938,9 +939,9 @@ class MessagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageEventsResponse",
-            '404': "InlineObject",
             '401': "InlineObject",
             '403': "InlineObject",
+            '404': "InlineObject",
             '429': "InlineObject",
             '400': "InlineObject",
             '409': "InlineObject",

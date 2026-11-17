@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **environment** | **str** | Runtime environment. @var &#39;production&#39;|&#39;staging&#39;|&#39;development&#39;|&#39;test&#39; @example production | 
 **timezone** | **str** | IANA timezone. @example UTC | 
 **default_sender** | **str** | Default sender address hint. @example hello@example.com | 
-**status** | **str** | Project lifecycle status. @var &#39;active&#39;|&#39;archived&#39; @example active | 
+**status** | **str** | Project lifecycle status. @var &#39;active&#39;|&#39;archived&#39;|&#39;inactive&#39; @example active | 
 **settings** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
 **email_count** | **int** | Number of messages in the project. @example 1240 | 
 **domain_count** | **int** | Number of sending domains. @example 2 | 

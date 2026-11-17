@@ -35,7 +35,7 @@ class ProjectResource(BaseModel):
     environment: StrictStr = Field(description="Runtime environment. @var 'production'|'staging'|'development'|'test' @example production")
     timezone: StrictStr = Field(description="IANA timezone. @example UTC")
     default_sender: Optional[StrictStr] = Field(description="Default sender address hint. @example hello@example.com")
-    status: StrictStr = Field(description="Project lifecycle status. @var 'active'|'archived' @example active")
+    status: StrictStr = Field(description="Project lifecycle status. @var 'active'|'archived'|'inactive' @example active")
     settings: SendEmailRequestVariables
     email_count: StrictInt = Field(description="Number of messages in the project. @example 1240")
     domain_count: StrictInt = Field(description="Number of sending domains. @example 2")

@@ -54,8 +54,8 @@ class UpdateApiKeyRequest(BaseModel):
             return value
 
         for i in value:
-            if i not in set(['emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'admin']):
-                raise ValueError("each list item must be one of ('emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'admin')")
+            if i not in set(['emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'webhooks.read', 'webhooks.write', 'suppressions.read', 'suppressions.write', 'events.read', 'admin']):
+                raise ValueError("each list item must be one of ('emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'webhooks.read', 'webhooks.write', 'suppressions.read', 'suppressions.write', 'events.read', 'admin')")
         return value
 
     @field_validator('permissions')
@@ -65,8 +65,8 @@ class UpdateApiKeyRequest(BaseModel):
             return value
 
         for i in value:
-            if i not in set(['emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'admin']):
-                raise ValueError("each list item must be one of ('emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'admin')")
+            if i not in set(['emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'webhooks.read', 'webhooks.write', 'suppressions.read', 'suppressions.write', 'events.read', 'admin']):
+                raise ValueError("each list item must be one of ('emails.send', 'emails.read', 'templates.read', 'templates.write', 'domains.read', 'domains.write', 'contacts.read', 'contacts.write', 'campaigns.read', 'campaigns.write', 'analytics.read', 'billing.read', 'projects.read', 'projects.write', 'api_keys.read', 'api_keys.write', 'webhooks.read', 'webhooks.write', 'suppressions.read', 'suppressions.write', 'events.read', 'admin')")
         return value
 
     model_config = ConfigDict(

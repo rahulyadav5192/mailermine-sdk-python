@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class TemplateLayoutStyle(str, Enum):
     """
-    TemplateLayoutStyle
+    | | |---| | `classic` <br/>  | | `modern` <br/>  | | `minimal` <br/>  | | `none` <br/> Email Studio / full custom HTML — no auto header/footer chrome. |
     """
 
     """
@@ -29,6 +29,7 @@ class TemplateLayoutStyle(str, Enum):
     CLASSIC = 'classic'
     MODERN = 'modern'
     MINIMAL = 'minimal'
+    NONE = 'none'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
