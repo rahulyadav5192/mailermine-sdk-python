@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
+import time
 from collections.abc import Mapping
 from typing import Any
 
@@ -573,34 +574,105 @@ class Webhooks(BaseResource):
             )
         )
 
+    #: Default maximum age, in seconds, of a signed webhook timestamp.
+    DEFAULT_TOLERANCE_SECONDS = 300
+
     @staticmethod
-    def verify(payload: str | bytes, signature: str, secret: str) -> bool:
-        """Verify a MailerMine HMAC-SHA256 webhook signature locally.
+    def verify(
+        payload: str | bytes,
+        signature: str,
+        secret: str,
+        timestamp: str | int | None = None,
+        tolerance: int = 300,
+    ) -> bool:
+        """Verify a MailerMine webhook signature locally.
+
+        MailerMine signs ``{timestamp}.{raw_body}`` with HMAC-SHA256 and sends the
+        timestamp in ``X-MailerMine-Timestamp`` and the signature in
+        ``X-MailerMine-Signature`` (``sha256=<hex>``). Pass the timestamp so the
+        signature matches and stale deliveries are rejected (replay protection).
+        Without a timestamp only a body-only signature is checked (legacy).
+        Prefer :meth:`verify_headers`.
 
         Parameters
         ----------
         payload:
             Raw request body exactly as received.
         signature:
-            Signature header value (optionally ``sha256=``-prefixed).
+            ``X-MailerMine-Signature`` value (optionally ``sha256=``-prefixed).
         secret:
             Webhook signing secret.
+        timestamp:
+            ``X-MailerMine-Timestamp`` value.
+        tolerance:
+            Maximum age of the timestamp in seconds (0 disables the check).
 
         Returns
         -------
         bool
-            ``True`` when the signature is valid, otherwise ``False``.
+            ``True`` when the signature is valid (and fresh), otherwise ``False``.
 
         Examples
         --------
-        >>> Webhooks.verify(raw_body, request.headers["X-Signature"], secret)
+        >>> Webhooks.verify(
+        ...     raw_body,
+        ...     request.headers["X-MailerMine-Signature"],
+        ...     secret,
+        ...     request.headers["X-MailerMine-Timestamp"],
+        ... )
         """
-        message = payload.encode("utf-8") if isinstance(payload, str) else payload
-        expected = hmac.new(secret.encode("utf-8"), message, hashlib.sha256).hexdigest()
-        normalized = signature[7:] if signature.lower().startswith("sha256=") else signature
+        if not secret or not signature:
+            return False
+        normalized = signature.strip()
+        normalized = normalized[7:] if normalized.lower().startswith("sha256=") else normalized
         if not _HEX_64.match(normalized):
             return False
+
+        message = payload.encode("utf-8") if isinstance(payload, str) else payload
+        if timestamp is not None and timestamp != "":
+            try:
+                seconds = int(str(timestamp).strip())
+            except ValueError:
+                return False
+            if tolerance > 0 and abs(time.time() - seconds) > tolerance:
+                return False
+            message = f"{seconds}.".encode() + message
+
+        expected = hmac.new(secret.encode("utf-8"), message, hashlib.sha256).hexdigest()
         return hmac.compare_digest(expected, normalized.lower())
+
+    @staticmethod
+    def verify_headers(
+        payload: str | bytes,
+        headers: Mapping[str, Any],
+        secret: str,
+        tolerance: int = 300,
+    ) -> bool:
+        """Verify a webhook from its request headers.
+
+        Reads ``X-MailerMine-Signature`` and ``X-MailerMine-Timestamp`` (falling
+        back to the legacy ``X-Relay-*`` headers), case-insensitively.
+
+        Examples
+        --------
+        >>> Webhooks.verify_headers(request.get_data(), request.headers, secret)
+        """
+        lowered = {str(key).lower().replace("_", "-"): value for key, value in headers.items()}
+
+        def read(*names: str) -> str | None:
+            for name in names:
+                value = lowered.get(name)
+                if isinstance(value, (list, tuple)):
+                    value = value[0] if value else None
+                if value:
+                    return str(value)
+            return None
+
+        signature = read("x-mailermine-signature", "x-relay-signature")
+        timestamp = read("x-mailermine-timestamp", "x-relay-timestamp")
+        if signature is None or timestamp is None:
+            return False
+        return Webhooks.verify(payload, signature, secret, timestamp, tolerance)
 
 
 def _normalize_dates(options: Mapping[str, Any]) -> dict[str, Any]:

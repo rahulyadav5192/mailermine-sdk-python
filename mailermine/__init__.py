@@ -23,6 +23,8 @@ from mailermine.client import MailerMine
 from mailermine.config import Configuration
 from mailermine.constants import (
     DEFAULT_BASE_URL,
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_MAX_RETRY_DELAY,
     DEFAULT_TIMEOUT,
     DEFAULT_USER_AGENT,
     VERSION,
@@ -31,6 +33,7 @@ from mailermine.exceptions import (
     ApiError,
     AuthenticationError,
     MailerMineError,
+    MissingScopeError,
     NotFoundError,
     PlanError,
     RateLimitError,
@@ -57,10 +60,14 @@ from mailermine.resources import (
     Webhooks,
 )
 from mailermine.support import Collection, Pagination, Response
+from mailermine.support.rate_limit import RateLimitInfo
+from mailermine.support.scopes import ScopePresets, Scopes
 from mailermine.types import JsonObject, JsonPrimitive, JsonValue
 
 __all__ = [
     "DEFAULT_BASE_URL",
+    "DEFAULT_MAX_RETRIES",
+    "DEFAULT_MAX_RETRY_DELAY",
     "DEFAULT_TIMEOUT",
     "DEFAULT_USER_AGENT",
     "VERSION",
@@ -85,12 +92,16 @@ __all__ = [
     "MailerMine",
     "MailerMineError",
     "Messages",
+    "MissingScopeError",
     "NotFoundError",
     "Pagination",
     "PlanError",
     "Projects",
     "RateLimitError",
+    "RateLimitInfo",
     "Response",
+    "ScopePresets",
+    "Scopes",
     "Segments",
     "Suppressions",
     "Tags",

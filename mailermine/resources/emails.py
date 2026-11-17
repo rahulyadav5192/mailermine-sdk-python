@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, cast
 
 from mailermine_generated import EmailsApi, MessagesApi
 
@@ -30,6 +30,8 @@ class Emails(BaseResource):
         self,
         payload: Mapping[str, Any] | None = None,
         /,
+        *,
+        idempotency_key: str | None = None,
         **kwargs: Any,
     ) -> Response[object]:
         """Queue a transactional email for delivery.
@@ -38,6 +40,10 @@ class Emails(BaseResource):
         ----------
         payload:
             Email fields as a mapping (``from``, ``to``, ``subject``, …).
+        idempotency_key:
+            Optional unique key (max 255 chars). Repeating a send with the same
+            key and body returns the original response instead of sending
+            again. A random key is used when omitted, so SDK retries are safe.
         **kwargs:
             Alternative keyword fields merged into the request body.
 
@@ -69,11 +75,20 @@ class Emails(BaseResource):
         to_value = body.get("to")
         if isinstance(to_value, str):
             body["to"] = [to_value]
+        if idempotency_key is not None and (
+            not isinstance(idempotency_key, str)
+            or not idempotency_key
+            or len(idempotency_key) > 255
+        ):
+            raise ValueError(
+                "idempotency_key must be a non-empty string of at most 255 characters."
+            )
         request = to_generated_request(body)
         return self.execute(
             lambda: to_response(
                 self._emails.send_email(
                     send_email_request=request,  # type: ignore[arg-type]
+                    idempotency_key=idempotency_key,
                     _request_timeout=self._timeout,
                 )
             )
@@ -137,7 +152,7 @@ class Emails(BaseResource):
         return self.execute(
             lambda: to_response(
                 self._messages.get_message(
-                    message=message_id,
+                    message=cast(Any, message_id),  # UUID string; validated by the API client
                     _request_timeout=self._timeout,
                 )
             )
@@ -170,7 +185,7 @@ class Emails(BaseResource):
         return self.execute(
             lambda: to_collection(
                 self._messages.message_events(
-                    message=message_id,
+                    message=cast(Any, message_id),  # UUID string; validated by the API client
                     _request_timeout=self._timeout,
                 )
             )

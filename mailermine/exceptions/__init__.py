@@ -7,11 +7,13 @@ import re
 from collections.abc import Mapping, Sequence
 
 from mailermine.constants import UPGRADE_URL
+from mailermine.support.rate_limit import RateLimitInfo
 
 __all__ = [
     "ApiError",
     "AuthenticationError",
     "MailerMineError",
+    "MissingScopeError",
     "NotFoundError",
     "PlanError",
     "RateLimitError",
@@ -125,6 +127,16 @@ class ApiError(MailerMineError):
                 return value
         return None
 
+    @property
+    def rate_limit(self) -> RateLimitInfo | None:
+        """Rate-limit state from the error response headers, when present."""
+        return RateLimitInfo.from_headers(self.headers)
+
+    @property
+    def is_retryable(self) -> bool:
+        """Whether retrying the same request later may succeed (429 and 5xx)."""
+        return self.status == 429 or self.status >= 500
+
     def is_client_error(self) -> bool:
         """Return whether this is an HTTP 4xx error.
 
@@ -219,6 +231,32 @@ class PlanError(ApiError):
             Billing upgrade URL.
         """
         return UPGRADE_URL
+
+
+class MissingScopeError(PlanError):
+    """The API key is valid but lacks a scope the endpoint requires (HTTP 403).
+
+    Subclass of :class:`PlanError`, so existing ``except PlanError`` handlers
+    still catch it. ``missing_scopes`` lists what the key would need.
+
+    Examples
+    --------
+    >>> from mailermine import MissingScopeError
+    >>> err = MissingScopeError("missing scope", missing_scopes=["domains.read"])
+    >>> err.missing_scopes
+    ['domains.read']
+    """
+
+    def __init__(
+        self,
+        message: str,
+        status: int = 403,
+        missing_scopes: list[str] | None = None,
+        body: object | None = None,
+        headers: Mapping[str, str] | None = None,
+    ) -> None:
+        super().__init__(message, status=status, body=body, headers=headers)
+        self.missing_scopes: list[str] = list(missing_scopes or [])
 
 
 class NotFoundError(ApiError):
@@ -404,6 +442,15 @@ def _map_error(error: BaseException) -> ApiError:
                 body=body,
                 headers=headers,
             )
+        missing_scopes = _extract_missing_scopes(body) if status == 403 else []
+        if missing_scopes:
+            return MissingScopeError(
+                message or "This API key is missing a required scope.",
+                status=status,
+                missing_scopes=missing_scopes,
+                body=body,
+                headers=headers,
+            )
         if status == 403:
             return PlanError(
                 _plan_message(message),
@@ -506,6 +553,17 @@ def _resolve_message(body: object, fallback: object) -> str:
     if isinstance(fallback, str) and fallback.strip():
         return _sanitize_text(fallback)
     return "MailerMine API request failed"
+
+
+def _extract_missing_scopes(body: object) -> list[str]:
+    if not isinstance(body, Mapping):
+        return []
+    errors = body.get("errors")
+    if not isinstance(errors, Mapping):
+        return []
+    scope = errors.get("scope")
+    values = [scope] if isinstance(scope, str) else scope if isinstance(scope, list) else []
+    return [value for value in values if isinstance(value, str) and value]
 
 
 def _extract_errors(body: object) -> dict[str, list[str]]:

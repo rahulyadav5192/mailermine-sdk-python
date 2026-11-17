@@ -70,6 +70,8 @@ client = MailerMine(
     api_key="relay_live_xxx",
     base_url="https://mailermine.com/api/v1",
     timeout=30.0,
+    max_retries=2,          # 0 disables automatic retries
+    max_retry_delay=30.0,   # longest single wait, in seconds
 )
 
 # Or build configuration explicitly:
@@ -88,6 +90,7 @@ client = MailerMine(configuration=config)
 | `MAILERMINE_API_KEY` | Bearer API key (used when `api_key` is omitted) |
 | `MAILERMINE_BASE_URL` | API base URL (default `https://mailermine.com/api/v1`) |
 | `MAILERMINE_TIMEOUT` | Request timeout in **seconds** (default `30`) |
+| `MAILERMINE_MAX_RETRIES` | Automatic retries (default `2`) |
 
 ```python
 # Reads MAILERMINE_API_KEY / MAILERMINE_BASE_URL / MAILERMINE_TIMEOUT
@@ -99,7 +102,22 @@ client = MailerMine()
 | `api_key` | `str` | — | Required MailerMine API key |
 | `base_url` | `str` | `https://mailermine.com/api/v1` | API base URL |
 | `timeout` | `float` | `30.0` | Request timeout in seconds |
-| `user_agent` | `str` | `mailermine-python/1.0.0` | User-Agent header |
+| `user_agent` | `str` | `mailermine-python/1.1.0` | User-Agent header |
+| `max_retries` | `int` | `2` | Retries for 429/502/503/504 and transport errors |
+| `max_retry_delay` | `float` | `30.0` | Longest single wait; a longer `Retry-After` raises `RateLimitError` |
+
+### Retries, rate limits and idempotency
+
+Rate-limited and temporarily unavailable requests are retried with backoff,
+honouring `Retry-After`. Email sends always carry an `Idempotency-Key`, so a
+retry is never delivered twice. Pass your own key to make retries from your
+own queue or process safe too:
+
+```python
+client.emails.send(message, idempotency_key=f"order-{order.id}-receipt")
+
+client.rate_limit.remaining if client.rate_limit else None  # latest X-RateLimit-* state
+```
 
 ---
 
@@ -329,10 +347,12 @@ client.webhooks.replay(webhook_id)
 client.webhooks.retry(delivery_id)
 client.webhooks.delete(webhook_id)
 
-# Local signature verification (no network):
+# Local signature verification (no network). MailerMine signs
+# "{timestamp}.{raw_body}"; deliveries older than 5 minutes are rejected.
 from mailermine import Webhooks
 
-Webhooks.verify(raw_body, signature_header, signing_secret)
+Webhooks.verify_headers(raw_body, request.headers, signing_secret)
+# or: Webhooks.verify(raw_body, signature_header, signing_secret, timestamp_header)
 ```
 
 ### Suppressions
@@ -443,14 +463,18 @@ except ApiError as e:
 | Exception | Typical cause |
 | --- | --- |
 | `AuthenticationError` | Invalid / missing API key (401) |
-| `PlanError` | Plan or scope restriction (403) |
+| `MissingScopeError` | API key lacks a scope; subclass of `PlanError`, has `missing_scopes` (403) |
+| `PlanError` | Plan restriction (403) |
 | `NotFoundError` | Missing object (404) |
 | `ValidationError` | Invalid payload (422) |
 | `RateLimitError` | Too many requests (429) |
 | `ApiError` | Other HTTP / transport failures |
 | `MailerMineError` | Base type for all SDK errors |
 
-Generated OpenAPI exceptions are never exposed.
+Generated OpenAPI exceptions are never exposed. Every `ApiError` has
+`rate_limit` and `is_retryable`. `Scopes` and `ScopePresets` list API key
+scopes, e.g. `client.api_keys.create(project_id, name="Mailer",
+scopes=list(ScopePresets.SENDING_ONLY))`.
 
 ---
 

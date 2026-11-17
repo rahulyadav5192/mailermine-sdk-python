@@ -5,6 +5,34 @@ All notable changes to the MailerMine Python SDK are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-11-17
+
+### Added
+
+- Automatic retries with backoff for 429/502/503/504 and transport errors,
+  honouring `Retry-After` (`max_retries`, default 2; `max_retry_delay`,
+  default 30s; `MAILERMINE_MAX_RETRIES`). POSTs are only replayed when they
+  carry an `Idempotency-Key`.
+- `emails.send(..., idempotency_key=...)`; sends get a random key by default
+  so SDK retries never deliver twice.
+- `client.rate_limit` / `ApiError.rate_limit` (`RateLimitInfo`) and
+  `ApiError.is_retryable`.
+- `MissingScopeError` (subclass of `PlanError`) with `missing_scopes`.
+- `Scopes` / `ScopePresets`, including `webhooks.*`, `suppressions.*` and
+  `events.read`.
+- `Webhooks.verify_headers()`.
+
+### Fixed
+
+- `Webhooks.verify()` could never validate a real MailerMine delivery: the
+  server signs `{timestamp}.{body}`. It now accepts the timestamp and rejects
+  stale deliveries (5 minute default); without a timestamp it keeps the old
+  body-only check.
+
+### Changed
+
+- Regenerated the OpenAPI client from the current API spec.
+
 ## [1.0.0] — 2026-07-18
 
 First stable public release of the official MailerMine Python SDK. Full public-surface

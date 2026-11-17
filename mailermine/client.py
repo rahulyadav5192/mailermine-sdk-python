@@ -24,6 +24,7 @@ from mailermine.resources.suppressions import Suppressions
 from mailermine.resources.tags import Tags
 from mailermine.resources.templates import Templates
 from mailermine.resources.webhooks import Webhooks
+from mailermine.support.rate_limit import RateLimitInfo
 
 
 class MailerMine:
@@ -39,6 +40,10 @@ class MailerMine:
         Optional request timeout in seconds.
     user_agent:
         Optional User-Agent override.
+    max_retries:
+        Automatic retries for 429/502/503/504 and transport errors (default 2).
+    max_retry_delay:
+        Longest single wait between retries in seconds (default 30).
     configuration:
         Optional pre-built :class:`~mailermine.config.Configuration`.
 
@@ -61,6 +66,8 @@ class MailerMine:
         base_url: str | None = None,
         timeout: float | None = None,
         user_agent: str | None = None,
+        max_retries: int | None = None,
+        max_retry_delay: float | None = None,
         configuration: Configuration | None = None,
     ) -> None:
         if configuration is not None:
@@ -75,6 +82,8 @@ class MailerMine:
                 base_url=base_url,
                 timeout=timeout,
                 user_agent=user_agent,
+                max_retries=max_retries,
+                max_retry_delay=max_retry_delay,
             )
         else:
             raise TypeError(
@@ -101,6 +110,12 @@ class MailerMine:
         self._suppressions: Suppressions | None = None
         self._imports: Imports | None = None
         self._exports: Exports | None = None
+
+    @property
+    def rate_limit(self) -> RateLimitInfo | None:
+        """Rate-limit state from the most recent API response, if any."""
+        api_client = self._apis.api_client
+        return getattr(api_client, "last_rate_limit", None)
 
     @property
     def configuration(self) -> Configuration:

@@ -35,6 +35,7 @@ from mailermine_generated import (
     Configuration as GeneratedConfiguration,
 )
 
+from mailermine._internal.transport import ResilientApiClient
 from mailermine.config import Configuration
 
 
@@ -82,7 +83,11 @@ def create_generated_apis(configuration: Configuration) -> GeneratedApis:
     generated = GeneratedConfiguration(host=configuration.base_url)
     generated.access_token = configuration.api_key
 
-    api_client = ApiClient(configuration=generated)
+    api_client = ResilientApiClient(
+        configuration=generated,
+        max_retries=configuration.max_retries,
+        max_retry_delay=configuration.max_retry_delay,
+    )
     api_client.user_agent = configuration.user_agent
 
     return GeneratedApis(
