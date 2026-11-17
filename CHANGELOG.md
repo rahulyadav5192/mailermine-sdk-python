@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Scopes` / `ScopePresets`, including `webhooks.*`, `suppressions.*` and
   `events.read`.
 - `Webhooks.verify_headers()`.
+- `held` message status: messages held for MailerMine trust & safety review
+  (the send call still succeeds). Older SDK versions reject this value in
+  strict response models, so upgrade before relying on it. Blocked sends are
+  `ValidationError`s with an `errors.content`, `errors.sending_limit`,
+  `errors.recipients` or `errors.sending` entry.
 
 ### Fixed
 

@@ -35,6 +35,7 @@ class MessageStatus(str, Enum):
     REJECTED = 'rejected'
     FAILED = 'failed'
     DEFERRED = 'deferred'
+    HELD = 'held'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
