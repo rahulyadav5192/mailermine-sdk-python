@@ -264,3 +264,9 @@ def test_webhook_verify_rejects_bad_or_stale_deliveries() -> None:
     old = timestamp - 3600
     assert not Webhooks.verify(PAYLOAD, _sign(old), SECRET, old)
     assert Webhooks.verify(PAYLOAD, _sign(old), SECRET, old, tolerance=0)
+
+
+def test_held_message_status_is_accepted_by_strict_models() -> None:
+    from mailermine_generated.models.message_status import MessageStatus
+
+    assert MessageStatus("held") == MessageStatus.HELD

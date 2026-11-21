@@ -18755,7 +18755,8 @@
           "complained",
           "rejected",
           "failed",
-          "deferred"
+          "deferred",
+          "held"
         ],
         "title": "MessageStatus"
       },
