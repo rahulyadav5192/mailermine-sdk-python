@@ -12,10 +12,10 @@ Name | Type | Description | Notes
 **status** | **str** | Contact lifecycle status. @var &#39;active&#39;|&#39;unsubscribed&#39;|&#39;suppressed&#39;|&#39;bounced&#39;|&#39;complained&#39;|&#39;archived&#39; @example active | 
 **subscribed** | **bool** | Whether the contact is subscribed to marketing email. @example true | 
 **source** | **str** | Acquisition source. @example api | 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**metadata** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **tags** | **List[Dict[str, object]]** | Loaded tag relationships. @var list&lt;array{id: string, name: string, color: string}&gt; | 
 **lists** | **List[Dict[str, object]]** | Loaded list relationships. @var list&lt;array{id: string, name: string}&gt; | 
-**custom_fields** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**custom_fields** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **created_at** | **str** | Creation time (ISO-8601). @format date-time @example 2026-07-16T10:00:00.000000Z | 
 **updated_at** | **str** | Last update time (ISO-8601). @format date-time @example 2026-07-16T11:00:00.000000Z | 
 

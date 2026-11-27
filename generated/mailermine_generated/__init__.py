@@ -61,6 +61,7 @@ __all__ = [
     "AnalyticsEngagement",
     "AnalyticsEngagementResponse",
     "AnalyticsMessages",
+    "AnalyticsMessagesByStatus",
     "AnalyticsMessagesDailyInner",
     "AnalyticsMessagesResponse",
     "AnalyticsMessagesTotals",
@@ -199,7 +200,7 @@ __all__ = [
     "SegmentResponse",
     "SendEmailRequest",
     "SendEmailRequestAttachmentsInner",
-    "SendEmailRequestVariables",
+    "SendEmailRequestTracking",
     "SendEmailResponse",
     "Suppression",
     "SuppressionListResponse",
@@ -299,6 +300,7 @@ from mailermine_generated.models.analytics_domains_response import AnalyticsDoma
 from mailermine_generated.models.analytics_engagement import AnalyticsEngagement as AnalyticsEngagement
 from mailermine_generated.models.analytics_engagement_response import AnalyticsEngagementResponse as AnalyticsEngagementResponse
 from mailermine_generated.models.analytics_messages import AnalyticsMessages as AnalyticsMessages
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus as AnalyticsMessagesByStatus
 from mailermine_generated.models.analytics_messages_daily_inner import AnalyticsMessagesDailyInner as AnalyticsMessagesDailyInner
 from mailermine_generated.models.analytics_messages_response import AnalyticsMessagesResponse as AnalyticsMessagesResponse
 from mailermine_generated.models.analytics_messages_totals import AnalyticsMessagesTotals as AnalyticsMessagesTotals
@@ -437,7 +439,7 @@ from mailermine_generated.models.segment_resource import SegmentResource as Segm
 from mailermine_generated.models.segment_response import SegmentResponse as SegmentResponse
 from mailermine_generated.models.send_email_request import SendEmailRequest as SendEmailRequest
 from mailermine_generated.models.send_email_request_attachments_inner import SendEmailRequestAttachmentsInner as SendEmailRequestAttachmentsInner
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables as SendEmailRequestVariables
+from mailermine_generated.models.send_email_request_tracking import SendEmailRequestTracking as SendEmailRequestTracking
 from mailermine_generated.models.send_email_response import SendEmailResponse as SendEmailResponse
 from mailermine_generated.models.suppression import Suppression as Suppression
 from mailermine_generated.models.suppression_list_response import SuppressionListResponse as SuppressionListResponse

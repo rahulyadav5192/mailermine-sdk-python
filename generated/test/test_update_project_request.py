@@ -41,7 +41,7 @@ class TestUpdateProjectRequest(unittest.TestCase):
                 environment = 'production',
                 timezone = '',
                 default_sender = '',
-                settings = None,
+                settings = { },
                 status = 'active'
             )
         else:

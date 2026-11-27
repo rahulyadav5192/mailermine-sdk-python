@@ -19,9 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from mailermine_generated.models.email_attachment import EmailAttachment
 from mailermine_generated.models.message_status import MessageStatus
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,7 +38,7 @@ class Message(BaseModel):
     cc: List[StrictStr] = Field(description="Carbon copy recipients.")
     bcc: List[StrictStr] = Field(description="Blind carbon copy recipients.")
     reply_to: Optional[StrictStr]
-    headers: SendEmailRequestVariables
+    headers: AnalyticsMessagesByStatus
     subject: StrictStr
     status: MessageStatus = Field(description="Delivery status.")
     status_label: StrictStr
@@ -46,7 +46,7 @@ class Message(BaseModel):
     provider_label: StrictStr
     provider_message_id: Optional[StrictStr]
     error_message: Optional[StrictStr]
-    metadata: SendEmailRequestVariables
+    metadata: AnalyticsMessagesByStatus
     tags: List[StrictStr] = Field(description="Tags for filtering and analytics.")
     attachments: List[EmailAttachment]
     scheduled_at: Optional[StrictStr]
@@ -175,7 +175,7 @@ class Message(BaseModel):
             "cc": obj.get("cc"),
             "bcc": obj.get("bcc"),
             "reply_to": obj.get("reply_to"),
-            "headers": SendEmailRequestVariables.from_dict(obj["headers"]) if obj.get("headers") is not None else None,
+            "headers": AnalyticsMessagesByStatus.from_dict(obj["headers"]) if obj.get("headers") is not None else None,
             "subject": obj.get("subject"),
             "status": obj.get("status"),
             "status_label": obj.get("status_label"),
@@ -183,7 +183,7 @@ class Message(BaseModel):
             "provider_label": obj.get("provider_label"),
             "provider_message_id": obj.get("provider_message_id"),
             "error_message": obj.get("error_message"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": AnalyticsMessagesByStatus.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
             "tags": obj.get("tags"),
             "attachments": [EmailAttachment.from_dict(_item) for _item in obj["attachments"]] if obj.get("attachments") is not None else None,
             "scheduled_at": obj.get("scheduled_at"),

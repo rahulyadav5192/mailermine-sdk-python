@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** | Public export UUID. @format uuid | 
 **status** | **str** | Export lifecycle status. @var &#39;pending&#39;|&#39;processing&#39;|&#39;completed&#39;|&#39;failed&#39; @example pending | 
 **contact_count** | **int** | Number of contacts written to the export. @example 1250 | 
-**filters** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**filters** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **download_url** | **str** | Download URL, available only after completion. @format uri | 
 **completed_at** | **str** | Processing completion time. @format date-time | 
 **created_at** | **str** | Job creation time. @format date-time | 

@@ -12517,16 +12517,8 @@
             "description": "Template UUID to render instead of inline content."
           },
           "variables": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Template variables (key-value object)."
           },
           "subject": {
@@ -12559,16 +12551,8 @@
             ]
           },
           "metadata": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Custom metadata stored with the message."
           },
           "tags": {
@@ -12586,17 +12570,33 @@
             }
           },
           "headers": {
-            "anyOf": [
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom email headers (requires `allow_custom_headers` plan capability)."
+          },
+          "tracking": {
+            "type": "object",
+            "description": "Turn open and click tracking on or off for this email, overriding the project default. Omitted or null keys use the project default. Plan limits and sender trust rules still apply, so tracking may stay off even when requested. Add `data-mm-notrack` to an `<a>` tag to exclude a single link.",
+            "examples": [
               {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
+                "opens": true,
+                "clicks": false
               }
             ],
-            "description": "Custom email headers (requires `allow_custom_headers` plan capability)."
+            "properties": {
+              "opens": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "clicks": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            }
           },
           "attachments": {
             "type": "array",
@@ -13302,16 +13302,8 @@
             ]
           },
           "variables": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Runtime values used to render placeholders."
           }
         },
@@ -13337,16 +13329,8 @@
             "description": "Backward-compatible alias of to."
           },
           "variables": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Runtime template variables."
           },
           "subject": {
@@ -13507,17 +13491,9 @@
             "maxLength": 255
           },
           "settings": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
-            "description": "Extensible project settings."
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Extensible project settings. `tracking.opens` and `tracking.clicks` (booleans, default true) set the project default for open and click tracking."
           }
         },
         "required": [
@@ -13599,16 +13575,8 @@
             "maxLength": 255
           },
           "settings": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Replacement settings object."
           },
           "status": {
@@ -13904,16 +13872,8 @@
             "maxLength": 64
           },
           "metadata": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Caller-defined metadata object."
           },
           "list_ids": {
@@ -13968,16 +13928,8 @@
             "nullable": true
           },
           "custom_fields": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Custom values keyed by field slug."
           }
         },
@@ -14039,16 +13991,8 @@
             ]
           },
           "metadata": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Replacement metadata object when present."
           },
           "list_ids": {
@@ -14085,16 +14029,8 @@
             "nullable": true
           },
           "custom_fields": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Replacement custom-field map when present."
           }
         },
@@ -18792,16 +18728,8 @@
         "type": "object",
         "properties": {
           "variables": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "maxItems": 0
-              }
-            ],
+            "type": "object",
+            "additionalProperties": true,
             "description": "Runtime values used to render placeholders."
           }
         },

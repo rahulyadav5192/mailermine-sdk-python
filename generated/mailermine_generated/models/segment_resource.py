@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -31,7 +31,7 @@ class SegmentResource(BaseModel):
     id: StrictStr = Field(description="Public segment UUID. @format uuid")
     name: StrictStr = Field(description="Project-unique segment name. @example Active customers")
     description: Optional[StrictStr] = Field(description="Optional segment description.")
-    rules: SendEmailRequestVariables
+    rules: AnalyticsMessagesByStatus
     contact_count: StrictInt = Field(description="Last evaluated matching contact count. @example 342")
     created_at: Optional[StrictStr] = Field(description="Creation time. @format date-time")
     updated_at: Optional[StrictStr] = Field(description="Last update time. @format date-time")
@@ -117,7 +117,7 @@ class SegmentResource(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "rules": SendEmailRequestVariables.from_dict(obj["rules"]) if obj.get("rules") is not None else None,
+            "rules": AnalyticsMessagesByStatus.from_dict(obj["rules"]) if obj.get("rules") is not None else None,
             "contact_count": obj.get("contact_count"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")

@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -35,10 +35,10 @@ class ContactResource(BaseModel):
     status: StrictStr = Field(description="Contact lifecycle status. @var 'active'|'unsubscribed'|'suppressed'|'bounced'|'complained'|'archived' @example active")
     subscribed: StrictBool = Field(description="Whether the contact is subscribed to marketing email. @example true")
     source: StrictStr = Field(description="Acquisition source. @example api")
-    metadata: SendEmailRequestVariables
+    metadata: AnalyticsMessagesByStatus
     tags: List[Dict[str, Any]] = Field(description="Loaded tag relationships. @var list<array{id: string, name: string, color: string}>")
     lists: List[Dict[str, Any]] = Field(description="Loaded list relationships. @var list<array{id: string, name: string}>")
-    custom_fields: SendEmailRequestVariables
+    custom_fields: AnalyticsMessagesByStatus
     created_at: Optional[StrictStr] = Field(description="Creation time (ISO-8601). @format date-time @example 2026-07-16T10:00:00.000000Z")
     updated_at: Optional[StrictStr] = Field(description="Last update time (ISO-8601). @format date-time @example 2026-07-16T11:00:00.000000Z")
     additional_properties: Dict[str, Any] = {}
@@ -135,10 +135,10 @@ class ContactResource(BaseModel):
             "status": obj.get("status"),
             "subscribed": obj.get("subscribed"),
             "source": obj.get("source"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": AnalyticsMessagesByStatus.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
             "tags": obj.get("tags"),
             "lists": obj.get("lists"),
-            "custom_fields": SendEmailRequestVariables.from_dict(obj["custom_fields"]) if obj.get("custom_fields") is not None else None,
+            "custom_fields": AnalyticsMessagesByStatus.from_dict(obj["custom_fields"]) if obj.get("custom_fields") is not None else None,
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")
         })

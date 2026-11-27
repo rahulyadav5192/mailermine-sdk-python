@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **provider** | **str** |  | 
 **provider_message_id** | **str** |  | 
 **error_message** | **str** |  | 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**metadata** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **tags** | **List[str]** |  | 
 **sent_at** | **str** |  | 
 **created_at** | **str** |  | 

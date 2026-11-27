@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from mailermine_generated.models.suppression_reason import SuppressionReason
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,7 +35,7 @@ class Suppression(BaseModel):
     reason_label: StrictStr = Field(description="Human-readable reason label.")
     source: Optional[StrictStr] = Field(description="Origin of the suppression (for example `bounce`, `manual`, `api`).")
     notes: Optional[StrictStr] = Field(description="Optional operator notes.")
-    metadata: SendEmailRequestVariables
+    metadata: AnalyticsMessagesByStatus
     restored_at: Optional[StrictStr] = Field(description="Time the suppression was restored (ISO-8601), or `null` if active.")
     created_at: Optional[StrictStr] = Field(description="Creation timestamp (ISO-8601).")
     updated_at: Optional[StrictStr] = Field(description="Last update timestamp (ISO-8601).")
@@ -134,7 +134,7 @@ class Suppression(BaseModel):
             "reason_label": obj.get("reason_label"),
             "source": obj.get("source"),
             "notes": obj.get("notes"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": AnalyticsMessagesByStatus.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
             "restored_at": obj.get("restored_at"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")

@@ -21,7 +21,6 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from uuid import UUID
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -35,11 +34,11 @@ class UpdateContactRequest(BaseModel):
     last_name: Optional[Annotated[str, Field(strict=True, max_length=255)]] = None
     status: Optional[StrictStr] = Field(default=None, description="Replacement lifecycle status.")
     subscribed: Optional[StrictBool] = Field(default=None, description="Replacement subscription state.")
-    metadata: Optional[SendEmailRequestVariables] = None
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Replacement metadata object when present.")
     list_ids: Optional[List[UUID]] = None
     tag_ids: Optional[List[UUID]] = None
     tag_names: Optional[List[Annotated[str, Field(strict=True, max_length=255)]]] = None
-    custom_fields: Optional[SendEmailRequestVariables] = None
+    custom_fields: Optional[Dict[str, Any]] = Field(default=None, description="Replacement custom-field map when present.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["email", "first_name", "last_name", "status", "subscribed", "metadata", "list_ids", "tag_ids", "tag_names", "custom_fields"]
 
@@ -94,12 +93,6 @@ class UpdateContactRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of metadata
-        if self.metadata:
-            _dict['metadata'] = self.metadata.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of custom_fields
-        if self.custom_fields:
-            _dict['custom_fields'] = self.custom_fields.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -147,11 +140,11 @@ class UpdateContactRequest(BaseModel):
             "last_name": obj.get("last_name"),
             "status": obj.get("status"),
             "subscribed": obj.get("subscribed"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": obj.get("metadata"),
             "list_ids": obj.get("list_ids"),
             "tag_ids": obj.get("tag_ids"),
             "tag_names": obj.get("tag_names"),
-            "custom_fields": SendEmailRequestVariables.from_dict(obj["custom_fields"]) if obj.get("custom_fields") is not None else None
+            "custom_fields": obj.get("custom_fields")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

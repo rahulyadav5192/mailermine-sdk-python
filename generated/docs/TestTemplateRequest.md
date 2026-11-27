@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **to** | **str** | Recipient email for the test send. | 
 **email** | **str** | Backward-compatible alias of to. | [optional] 
-**variables** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**variables** | **Dict[str, object]** | Runtime template variables. | [optional] 
 **subject** | **str** | Optional subject override. | [optional] 
 
 ## Example

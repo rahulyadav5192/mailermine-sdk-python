@@ -46,16 +46,19 @@ class TestSendEmailRequest(unittest.TestCase):
                     ''
                     ],
                 template_id = '',
-                variables = None,
+                variables = { },
                 subject = '',
                 html = '',
                 text = '',
                 reply_to = '',
-                metadata = None,
+                metadata = { },
                 tags = [
                     ''
                     ],
-                headers = None,
+                headers = { },
+                tracking = mailermine_generated.models.send_email_request_tracking.SendEmailRequest_tracking(
+                    opens = True, 
+                    clicks = True, ),
                 attachments = [
                     mailermine_generated.models.send_email_request_attachments_inner.SendEmailRequest_attachments_inner(
                         filename = '', 

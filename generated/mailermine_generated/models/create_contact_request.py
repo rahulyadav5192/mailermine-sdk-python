@@ -21,7 +21,6 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from uuid import UUID
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -36,11 +35,11 @@ class CreateContactRequest(BaseModel):
     status: Optional[StrictStr] = Field(default=None, description="Initial contact lifecycle status.")
     subscribed: Optional[StrictBool] = Field(default=True, description="Initial marketing subscription state.")
     source: Optional[Annotated[str, Field(strict=True, max_length=64)]] = Field(default='api', description="Acquisition source.")
-    metadata: Optional[SendEmailRequestVariables] = None
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Caller-defined metadata object.")
     list_ids: Optional[List[UUID]] = Field(default=None, description="List UUIDs to assign.")
     tag_ids: Optional[List[UUID]] = Field(default=None, description="Existing tag UUIDs to assign.")
     tag_names: Optional[List[Annotated[str, Field(strict=True, max_length=255)]]] = Field(default=None, description="Tag names to resolve or create.")
-    custom_fields: Optional[SendEmailRequestVariables] = None
+    custom_fields: Optional[Dict[str, Any]] = Field(default=None, description="Custom values keyed by field slug.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["email", "first_name", "last_name", "status", "subscribed", "source", "metadata", "list_ids", "tag_ids", "tag_names", "custom_fields"]
 
@@ -95,12 +94,6 @@ class CreateContactRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of metadata
-        if self.metadata:
-            _dict['metadata'] = self.metadata.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of custom_fields
-        if self.custom_fields:
-            _dict['custom_fields'] = self.custom_fields.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -164,11 +157,11 @@ class CreateContactRequest(BaseModel):
             "status": obj.get("status"),
             "subscribed": obj.get("subscribed") if obj.get("subscribed") is not None else True,
             "source": obj.get("source") if obj.get("source") is not None else 'api',
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": obj.get("metadata"),
             "list_ids": obj.get("list_ids"),
             "tag_ids": obj.get("tag_ids"),
             "tag_names": obj.get("tag_names"),
-            "custom_fields": SendEmailRequestVariables.from_dict(obj["custom_fields"]) if obj.get("custom_fields") is not None else None
+            "custom_fields": obj.get("custom_fields")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -11,11 +11,11 @@ Name | Type | Description | Notes
 **status** | **str** | Initial contact lifecycle status. | [optional] 
 **subscribed** | **bool** | Initial marketing subscription state. | [optional] [default to True]
 **source** | **str** | Acquisition source. | [optional] [default to 'api']
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**metadata** | **Dict[str, object]** | Caller-defined metadata object. | [optional] 
 **list_ids** | **List[UUID]** | List UUIDs to assign. | [optional] 
 **tag_ids** | **List[UUID]** | Existing tag UUIDs to assign. | [optional] 
 **tag_names** | **List[str]** | Tag names to resolve or create. | [optional] 
-**custom_fields** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**custom_fields** | **Dict[str, object]** | Custom values keyed by field slug. | [optional] 
 
 ## Example
 

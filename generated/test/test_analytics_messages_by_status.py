@@ -14,10 +14,10 @@
 
 import unittest
 
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 
-class TestSendEmailRequestVariables(unittest.TestCase):
-    """SendEmailRequestVariables unit test stubs"""
+class TestAnalyticsMessagesByStatus(unittest.TestCase):
+    """AnalyticsMessagesByStatus unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,24 +25,24 @@ class TestSendEmailRequestVariables(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> SendEmailRequestVariables:
-        """Test SendEmailRequestVariables
+    def make_instance(self, include_optional) -> AnalyticsMessagesByStatus:
+        """Test AnalyticsMessagesByStatus
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `SendEmailRequestVariables`
+        # uncomment below to create an instance of `AnalyticsMessagesByStatus`
         """
-        model = SendEmailRequestVariables()
+        model = AnalyticsMessagesByStatus()
         if include_optional:
-            return SendEmailRequestVariables(
+            return AnalyticsMessagesByStatus(
             )
         else:
-            return SendEmailRequestVariables(
+            return AnalyticsMessagesByStatus(
         )
         """
 
-    def testSendEmailRequestVariables(self):
-        """Test SendEmailRequestVariables"""
+    def testAnalyticsMessagesByStatus(self):
+        """Test AnalyticsMessagesByStatus"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

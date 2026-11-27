@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from uuid import UUID
 from mailermine_generated.models.send_email_request_attachments_inner import SendEmailRequestAttachmentsInner
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.send_email_request_tracking import SendEmailRequestTracking
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -36,17 +36,18 @@ class SendEmailRequest(BaseModel):
     cc: Optional[List[Annotated[str, Field(strict=True, max_length=255)]]] = Field(default=None, description="Carbon copy recipients.")
     bcc: Optional[List[Annotated[str, Field(strict=True, max_length=255)]]] = Field(default=None, description="Blind carbon copy recipients.")
     template_id: Optional[UUID] = Field(default=None, description="Template UUID to render instead of inline content.")
-    variables: Optional[SendEmailRequestVariables] = None
+    variables: Optional[Dict[str, Any]] = Field(default=None, description="Template variables (key-value object).")
     subject: Optional[StrictStr] = Field(default=None, description="Email subject. Required when not using a template.")
     html: Optional[StrictStr] = Field(default=None, description="HTML body. Required with `text` when not using a template.")
     text: Optional[StrictStr] = Field(default=None, description="Plain text body. Required with `html` when not using a template.")
     reply_to: Optional[StrictStr] = Field(default=None, description="Reply-to address.")
-    metadata: Optional[SendEmailRequestVariables] = None
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Custom metadata stored with the message.")
     tags: Optional[List[Annotated[str, Field(strict=True, max_length=255)]]] = Field(default=None, description="Tags for filtering and analytics.")
-    headers: Optional[SendEmailRequestVariables] = None
+    headers: Optional[Dict[str, Any]] = Field(default=None, description="Custom email headers (requires `allow_custom_headers` plan capability).")
+    tracking: Optional[SendEmailRequestTracking] = None
     attachments: Optional[List[SendEmailRequestAttachmentsInner]] = Field(default=None, description="Base64-encoded file attachments.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["from", "to", "cc", "bcc", "template_id", "variables", "subject", "html", "text", "reply_to", "metadata", "tags", "headers", "attachments"]
+    __properties: ClassVar[List[str]] = ["from", "to", "cc", "bcc", "template_id", "variables", "subject", "html", "text", "reply_to", "metadata", "tags", "headers", "tracking", "attachments"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -89,15 +90,9 @@ class SendEmailRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of variables
-        if self.variables:
-            _dict['variables'] = self.variables.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of metadata
-        if self.metadata:
-            _dict['metadata'] = self.metadata.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of headers
-        if self.headers:
-            _dict['headers'] = self.headers.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tracking
+        if self.tracking:
+            _dict['tracking'] = self.tracking.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in attachments (list)
         _items = []
         if self.attachments:
@@ -127,14 +122,15 @@ class SendEmailRequest(BaseModel):
             "cc": obj.get("cc"),
             "bcc": obj.get("bcc"),
             "template_id": obj.get("template_id"),
-            "variables": SendEmailRequestVariables.from_dict(obj["variables"]) if obj.get("variables") is not None else None,
+            "variables": obj.get("variables"),
             "subject": obj.get("subject"),
             "html": obj.get("html"),
             "text": obj.get("text"),
             "reply_to": obj.get("reply_to"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": obj.get("metadata"),
             "tags": obj.get("tags"),
-            "headers": SendEmailRequestVariables.from_dict(obj["headers"]) if obj.get("headers") is not None else None,
+            "headers": obj.get("headers"),
+            "tracking": SendEmailRequestTracking.from_dict(obj["tracking"]) if obj.get("tracking") is not None else None,
             "attachments": [SendEmailRequestAttachmentsInner.from_dict(_item) for _item in obj["attachments"]] if obj.get("attachments") is not None else None
         })
         # store additional fields in additional_properties

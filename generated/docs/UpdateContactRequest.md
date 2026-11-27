@@ -10,11 +10,11 @@ Name | Type | Description | Notes
 **last_name** | **str** |  | [optional] 
 **status** | **str** | Replacement lifecycle status. | [optional] 
 **subscribed** | **bool** | Replacement subscription state. | [optional] 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**metadata** | **Dict[str, object]** | Replacement metadata object when present. | [optional] 
 **list_ids** | **List[UUID]** |  | [optional] 
 **tag_ids** | **List[UUID]** |  | [optional] 
 **tag_names** | **List[str]** |  | [optional] 
-**custom_fields** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**custom_fields** | **Dict[str, object]** | Replacement custom-field map when present. | [optional] 
 
 ## Example
 

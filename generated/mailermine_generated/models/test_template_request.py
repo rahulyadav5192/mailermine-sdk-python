@@ -20,7 +20,6 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -31,7 +30,7 @@ class TestTemplateRequest(BaseModel):
     """ # noqa: E501
     to: StrictStr = Field(description="Recipient email for the test send.")
     email: Optional[StrictStr] = Field(default=None, description="Backward-compatible alias of to.")
-    variables: Optional[SendEmailRequestVariables] = None
+    variables: Optional[Dict[str, Any]] = Field(default=None, description="Runtime template variables.")
     subject: Optional[Annotated[str, Field(strict=True, max_length=998)]] = Field(default=None, description="Optional subject override.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["to", "email", "variables", "subject"]
@@ -77,9 +76,6 @@ class TestTemplateRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of variables
-        if self.variables:
-            _dict['variables'] = self.variables.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -104,7 +100,7 @@ class TestTemplateRequest(BaseModel):
         _obj = cls.model_validate({
             "to": obj.get("to"),
             "email": obj.get("email"),
-            "variables": SendEmailRequestVariables.from_dict(obj["variables"]) if obj.get("variables") is not None else None,
+            "variables": obj.get("variables"),
             "subject": obj.get("subject")
         })
         # store additional fields in additional_properties

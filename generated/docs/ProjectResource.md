@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **timezone** | **str** | IANA timezone. @example UTC | 
 **default_sender** | **str** | Default sender address hint. @example hello@example.com | 
 **status** | **str** | Project lifecycle status. @var &#39;active&#39;|&#39;archived&#39;|&#39;inactive&#39; @example active | 
-**settings** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**settings** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **email_count** | **int** | Number of messages in the project. @example 1240 | 
 **domain_count** | **int** | Number of sending domains. @example 2 | 
 **api_key_count** | **int** | Number of API keys. @example 3 | 

@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -31,7 +31,7 @@ class ExportJob(BaseModel):
     id: StrictStr = Field(description="Public export UUID. @format uuid")
     status: StrictStr = Field(description="Export lifecycle status. @var 'pending'|'processing'|'completed'|'failed' @example pending")
     contact_count: StrictInt = Field(description="Number of contacts written to the export. @example 1250")
-    filters: SendEmailRequestVariables
+    filters: AnalyticsMessagesByStatus
     download_url: Optional[StrictStr] = Field(description="Download URL, available only after completion. @format uri")
     completed_at: Optional[StrictStr] = Field(description="Processing completion time. @format date-time")
     created_at: Optional[StrictStr] = Field(description="Job creation time. @format date-time")
@@ -123,7 +123,7 @@ class ExportJob(BaseModel):
             "id": obj.get("id"),
             "status": obj.get("status"),
             "contact_count": obj.get("contact_count"),
-            "filters": SendEmailRequestVariables.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
+            "filters": AnalyticsMessagesByStatus.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
             "download_url": obj.get("download_url"),
             "completed_at": obj.get("completed_at"),
             "created_at": obj.get("created_at"),
