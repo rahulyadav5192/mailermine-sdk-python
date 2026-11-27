@@ -71,6 +71,26 @@ class TestAnalyticsOverview(unittest.TestCase):
                         event_label = '', 
                         occurred_at = '', 
                         message_uuid = '', )
+                    ],
+                tracking = mailermine_generated.models.analytics_overview_tracking.AnalyticsOverview_tracking(
+                    delivered = 56, 
+                    opens_tracked = 56, 
+                    clicks_tracked = 56, ),
+                tracking_domains = [
+                    mailermine_generated.models.analytics_engagement_by_tracking_domain_inner.AnalyticsEngagement_by_tracking_domain_inner(
+                        id = '', 
+                        hostname = '', 
+                        status = '', 
+                        status_label = '', 
+                        is_default = True, 
+                        last_checked_at = '', 
+                        last_error = '', 
+                        sent = 56, 
+                        delivered = 56, 
+                        unique_opens = 56, 
+                        unique_clicks = 56, 
+                        open_rate = 1.337, 
+                        click_rate = 1.337, )
                     ]
             )
         else:
