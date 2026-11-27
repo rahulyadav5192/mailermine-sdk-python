@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `WebhookEventPayload`, `WebhookClick` and `WebhookOpen` types. `email.clicked`
   webhooks now include `click` (`url`, `link_id`, `is_unique`, `clicked_at`)
   and `email.opened` includes `open` (`is_unique`, `opened_at`).
+- Analytics responses include tracking data: `analytics.engagement()` adds
+  `opens_tracked_delivered`, `clicks_tracked_delivered` and
+  `by_tracking_domain` (per custom tracking domain plus the shared host);
+  `analytics.overview()` adds `tracking` and `trackingDomains`. Open and click
+  rates now only count emails that had tracking on. The fields are optional,
+  so the strict response models still accept older servers.
 
 ### Fixed
 

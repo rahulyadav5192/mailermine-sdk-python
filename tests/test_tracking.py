@@ -83,3 +83,72 @@ def test_webhook_payload_types_are_public() -> None:
     opened: WebhookOpen = {"is_unique": False, "opened_at": None}
     payload: WebhookEventPayload = {"type": "email.clicked", "click": click, "open": opened}
     assert payload["click"]["url"] == "https://example.com"
+
+
+_ENGAGEMENT_BASE = {
+    "from": "2026-11-01T00:00:00+00:00",
+    "to": "2026-11-27T00:00:00+00:00",
+    "opens": 2,
+    "unique_opens": 2,
+    "clicks": 1,
+    "unique_clicks": 1,
+    "open_rate": 50.0,
+    "ctr": 25.0,
+    "ctor": 50.0,
+    "sent": 8,
+    "delivered": 8,
+}
+
+
+def test_engagement_model_accepts_responses_with_and_without_tracking_fields() -> None:
+    """Strict models must parse both new servers and servers deployed before the fields existed."""
+    from mailermine_generated.models.analytics_engagement import AnalyticsEngagement
+
+    old = AnalyticsEngagement.from_dict(_ENGAGEMENT_BASE)
+    assert old is not None
+    assert old.by_tracking_domain is None
+
+    new = AnalyticsEngagement.from_dict(
+        {
+            **_ENGAGEMENT_BASE,
+            "opens_tracked_delivered": 4,
+            "clicks_tracked_delivered": 4,
+            "by_tracking_domain": [
+                {
+                    "id": "2f6c1f0e-9a7b-4c1d-8e2f-3a4b5c6d7e8f",
+                    "hostname": "links.acme.com",
+                    "status": "verified",
+                    "status_label": "Active",
+                    "is_default": True,
+                    "last_checked_at": None,
+                    "last_error": None,
+                    "sent": 2,
+                    "delivered": 2,
+                    "unique_opens": 1,
+                    "unique_clicks": 1,
+                    "open_rate": 50.0,
+                    "click_rate": 50.0,
+                },
+                {
+                    "id": None,
+                    "hostname": None,
+                    "status": "shared",
+                    "status_label": "Shared host",
+                    "is_default": False,
+                    "last_checked_at": None,
+                    "last_error": None,
+                    "sent": 6,
+                    "delivered": 6,
+                    "unique_opens": 1,
+                    "unique_clicks": 0,
+                    "open_rate": 16.7,
+                    "click_rate": 0.0,
+                },
+            ],
+        }
+    )
+    assert new is not None
+    assert new.opens_tracked_delivered == 4
+    assert new.by_tracking_domain is not None
+    assert new.by_tracking_domain[0].hostname == "links.acme.com"
+    assert new.by_tracking_domain[1].hostname is None
