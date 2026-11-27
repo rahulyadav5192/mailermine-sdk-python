@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-VERSION: str = "1.1.0"
+VERSION: str = "1.2.0"
 
 DEFAULT_BASE_URL: str = "https://mailermine.com/api/v1"
 

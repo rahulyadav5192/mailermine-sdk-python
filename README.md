@@ -102,7 +102,7 @@ client = MailerMine()
 | `api_key` | `str` | — | Required MailerMine API key |
 | `base_url` | `str` | `https://mailermine.com/api/v1` | API base URL |
 | `timeout` | `float` | `30.0` | Request timeout in seconds |
-| `user_agent` | `str` | `mailermine-python/1.1.0` | User-Agent header |
+| `user_agent` | `str` | `mailermine-python/1.2.0` | User-Agent header |
 | `max_retries` | `int` | `2` | Retries for 429/502/503/504 and transport errors |
 | `max_retry_delay` | `float` | `30.0` | Longest single wait; a longer `Retry-After` raises `RateLimitError` |
 
@@ -162,6 +162,19 @@ client.emails.send(
 client.emails.list(status="delivered", per_page=25)
 client.emails.get(message_id)
 client.emails.events(message_id)
+
+# Open/click tracking follows the project defaults; override per email.
+# (Add data-mm-notrack to an <a> tag to leave one link untracked.)
+client.emails.send(
+    from_="hello@example.com",
+    to="user@example.com",
+    subject="Reset your password",
+    html='<a href="https://app.example.com/reset?t=abc">Reset password</a>',
+    tracking={"opens": True, "clicks": False},
+)
+
+# Project defaults
+client.projects.update(project_id, settings={"tracking": {"opens": True, "clicks": True}})
 ```
 
 > Use `from_` as a keyword argument (or pass `"from"` inside a dict) because `from` is reserved in Python.
@@ -353,6 +366,14 @@ from mailermine import Webhooks
 
 Webhooks.verify_headers(raw_body, request.headers, signing_secret)
 # or: Webhooks.verify(raw_body, signature_header, signing_secret, timestamp_header)
+
+# Typed body: email.clicked includes the clicked link.
+import json
+from mailermine import WebhookEventPayload
+
+event: WebhookEventPayload = json.loads(raw_body)
+if event["type"] == "email.clicked":
+    print(event["click"]["url"])
 ```
 
 ### Suppressions
