@@ -45,7 +45,25 @@ class TestAnalyticsEngagement(unittest.TestCase):
                 ctr = 1.337,
                 ctor = 1.337,
                 sent = 56,
-                delivered = 56
+                delivered = 56,
+                opens_tracked_delivered = 56,
+                clicks_tracked_delivered = 56,
+                by_tracking_domain = [
+                    mailermine_generated.models.analytics_engagement_by_tracking_domain_inner.AnalyticsEngagement_by_tracking_domain_inner(
+                        id = '', 
+                        hostname = '', 
+                        status = '', 
+                        status_label = '', 
+                        is_default = True, 
+                        last_checked_at = '', 
+                        last_error = '', 
+                        sent = 56, 
+                        delivered = 56, 
+                        unique_opens = 56, 
+                        unique_clicks = 56, 
+                        open_rate = 1.337, 
+                        click_rate = 1.337, )
+                    ]
             )
         else:
             return AnalyticsEngagement(

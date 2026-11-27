@@ -59,6 +59,7 @@ __all__ = [
     "AnalyticsDomainsDomainsInner",
     "AnalyticsDomainsResponse",
     "AnalyticsEngagement",
+    "AnalyticsEngagementByTrackingDomainInner",
     "AnalyticsEngagementResponse",
     "AnalyticsMessages",
     "AnalyticsMessagesByStatus",
@@ -71,6 +72,7 @@ __all__ = [
     "AnalyticsOverviewResponse",
     "AnalyticsOverviewTopCampaignsInner",
     "AnalyticsOverviewTopLinksInner",
+    "AnalyticsOverviewTracking",
     "AnalyticsProjects",
     "AnalyticsProjectsProjectsInner",
     "AnalyticsProjectsResponse",
@@ -298,6 +300,7 @@ from mailermine_generated.models.analytics_domains import AnalyticsDomains as An
 from mailermine_generated.models.analytics_domains_domains_inner import AnalyticsDomainsDomainsInner as AnalyticsDomainsDomainsInner
 from mailermine_generated.models.analytics_domains_response import AnalyticsDomainsResponse as AnalyticsDomainsResponse
 from mailermine_generated.models.analytics_engagement import AnalyticsEngagement as AnalyticsEngagement
+from mailermine_generated.models.analytics_engagement_by_tracking_domain_inner import AnalyticsEngagementByTrackingDomainInner as AnalyticsEngagementByTrackingDomainInner
 from mailermine_generated.models.analytics_engagement_response import AnalyticsEngagementResponse as AnalyticsEngagementResponse
 from mailermine_generated.models.analytics_messages import AnalyticsMessages as AnalyticsMessages
 from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus as AnalyticsMessagesByStatus
@@ -310,6 +313,7 @@ from mailermine_generated.models.analytics_overview_recent_activity_inner import
 from mailermine_generated.models.analytics_overview_response import AnalyticsOverviewResponse as AnalyticsOverviewResponse
 from mailermine_generated.models.analytics_overview_top_campaigns_inner import AnalyticsOverviewTopCampaignsInner as AnalyticsOverviewTopCampaignsInner
 from mailermine_generated.models.analytics_overview_top_links_inner import AnalyticsOverviewTopLinksInner as AnalyticsOverviewTopLinksInner
+from mailermine_generated.models.analytics_overview_tracking import AnalyticsOverviewTracking as AnalyticsOverviewTracking
 from mailermine_generated.models.analytics_projects import AnalyticsProjects as AnalyticsProjects
 from mailermine_generated.models.analytics_projects_projects_inner import AnalyticsProjectsProjectsInner as AnalyticsProjectsProjectsInner
 from mailermine_generated.models.analytics_projects_response import AnalyticsProjectsResponse as AnalyticsProjectsResponse

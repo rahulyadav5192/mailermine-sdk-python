@@ -16,6 +16,7 @@ docs/AnalyticsDomains.md
 docs/AnalyticsDomainsDomainsInner.md
 docs/AnalyticsDomainsResponse.md
 docs/AnalyticsEngagement.md
+docs/AnalyticsEngagementByTrackingDomainInner.md
 docs/AnalyticsEngagementResponse.md
 docs/AnalyticsMessages.md
 docs/AnalyticsMessagesByStatus.md
@@ -28,6 +29,7 @@ docs/AnalyticsOverviewRecentActivityInner.md
 docs/AnalyticsOverviewResponse.md
 docs/AnalyticsOverviewTopCampaignsInner.md
 docs/AnalyticsOverviewTopLinksInner.md
+docs/AnalyticsOverviewTracking.md
 docs/AnalyticsProjects.md
 docs/AnalyticsProjectsProjectsInner.md
 docs/AnalyticsProjectsResponse.md
@@ -267,6 +269,7 @@ mailermine_generated/models/analytics_domains.py
 mailermine_generated/models/analytics_domains_domains_inner.py
 mailermine_generated/models/analytics_domains_response.py
 mailermine_generated/models/analytics_engagement.py
+mailermine_generated/models/analytics_engagement_by_tracking_domain_inner.py
 mailermine_generated/models/analytics_engagement_response.py
 mailermine_generated/models/analytics_messages.py
 mailermine_generated/models/analytics_messages_by_status.py
@@ -279,6 +282,7 @@ mailermine_generated/models/analytics_overview_recent_activity_inner.py
 mailermine_generated/models/analytics_overview_response.py
 mailermine_generated/models/analytics_overview_top_campaigns_inner.py
 mailermine_generated/models/analytics_overview_top_links_inner.py
+mailermine_generated/models/analytics_overview_tracking.py
 mailermine_generated/models/analytics_projects.py
 mailermine_generated/models/analytics_projects_projects_inner.py
 mailermine_generated/models/analytics_projects_response.py
@@ -477,6 +481,7 @@ test/test_analytics_domains.py
 test/test_analytics_domains_domains_inner.py
 test/test_analytics_domains_response.py
 test/test_analytics_engagement.py
+test/test_analytics_engagement_by_tracking_domain_inner.py
 test/test_analytics_engagement_response.py
 test/test_analytics_messages.py
 test/test_analytics_messages_by_status.py
@@ -489,6 +494,7 @@ test/test_analytics_overview_recent_activity_inner.py
 test/test_analytics_overview_response.py
 test/test_analytics_overview_top_campaigns_inner.py
 test/test_analytics_overview_top_links_inner.py
+test/test_analytics_overview_tracking.py
 test/test_analytics_projects.py
 test/test_analytics_projects_projects_inner.py
 test/test_analytics_projects_response.py

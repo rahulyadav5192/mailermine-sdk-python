@@ -18,11 +18,13 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from mailermine_generated.models.analytics_engagement_by_tracking_domain_inner import AnalyticsEngagementByTrackingDomainInner
 from mailermine_generated.models.analytics_overview_daily_series_inner import AnalyticsOverviewDailySeriesInner
 from mailermine_generated.models.analytics_overview_recent_activity_inner import AnalyticsOverviewRecentActivityInner
 from mailermine_generated.models.analytics_overview_top_campaigns_inner import AnalyticsOverviewTopCampaignsInner
 from mailermine_generated.models.analytics_overview_top_links_inner import AnalyticsOverviewTopLinksInner
+from mailermine_generated.models.analytics_overview_tracking import AnalyticsOverviewTracking
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -34,16 +36,18 @@ class AnalyticsOverview(BaseModel):
     emails_sent: StrictInt = Field(description="Total emails sent in the selected range.", alias="emailsSent")
     campaigns: StrictInt = Field(description="Number of campaigns that sent in the selected range.")
     delivery_rate: Union[StrictFloat, StrictInt] = Field(description="Delivered / sent as a percentage.", alias="deliveryRate")
-    open_rate: Union[StrictFloat, StrictInt] = Field(description="Unique opens / delivered as a percentage.", alias="openRate")
-    click_rate: Union[StrictFloat, StrictInt] = Field(description="Unique clicks / delivered as a percentage.", alias="clickRate")
+    open_rate: Union[StrictFloat, StrictInt] = Field(description="Unique opens / delivered emails that had open tracking, as a percentage.", alias="openRate")
+    click_rate: Union[StrictFloat, StrictInt] = Field(description="Unique clicks / delivered emails that had click tracking, as a percentage.", alias="clickRate")
     bounce_rate: Union[StrictFloat, StrictInt] = Field(description="Bounced / sent as a percentage.", alias="bounceRate")
     complaint_rate: Union[StrictFloat, StrictInt] = Field(description="Complaints / sent as a percentage.", alias="complaintRate")
     daily_series: List[AnalyticsOverviewDailySeriesInner] = Field(description="Daily performance series.", alias="dailySeries")
     top_campaigns: List[AnalyticsOverviewTopCampaignsInner] = Field(description="Top campaigns by volume.", alias="topCampaigns")
     top_links: List[AnalyticsOverviewTopLinksInner] = Field(description="Top tracked links by clicks.", alias="topLinks")
     recent_activity: List[AnalyticsOverviewRecentActivityInner] = Field(description="Recent recipient activity.", alias="recentActivity")
+    tracking: Optional[AnalyticsOverviewTracking] = None
+    tracking_domains: Optional[List[AnalyticsEngagementByTrackingDomainInner]] = Field(default=None, description="Volume, engagement and health per custom tracking domain. The row with `hostname: null` is the shared host. Empty when no tracking domain is configured.", alias="trackingDomains")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["emailsSent", "campaigns", "deliveryRate", "openRate", "clickRate", "bounceRate", "complaintRate", "dailySeries", "topCampaigns", "topLinks", "recentActivity"]
+    __properties: ClassVar[List[str]] = ["emailsSent", "campaigns", "deliveryRate", "openRate", "clickRate", "bounceRate", "complaintRate", "dailySeries", "topCampaigns", "topLinks", "recentActivity", "tracking", "trackingDomains"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -114,10 +118,25 @@ class AnalyticsOverview(BaseModel):
                 if _item_recent_activity:
                     _items.append(_item_recent_activity.to_dict())
             _dict['recentActivity'] = _items
+        # override the default output from pydantic by calling `to_dict()` of tracking
+        if self.tracking:
+            _dict['tracking'] = self.tracking.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in tracking_domains (list)
+        _items = []
+        if self.tracking_domains:
+            for _item_tracking_domains in self.tracking_domains:
+                if _item_tracking_domains:
+                    _items.append(_item_tracking_domains.to_dict())
+            _dict['trackingDomains'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if tracking_domains (nullable) is None
+        # and model_fields_set contains the field
+        if self.tracking_domains is None and "tracking_domains" in self.model_fields_set:
+            _dict['trackingDomains'] = None
 
         return _dict
 
@@ -141,7 +160,9 @@ class AnalyticsOverview(BaseModel):
             "dailySeries": [AnalyticsOverviewDailySeriesInner.from_dict(_item) for _item in obj["dailySeries"]] if obj.get("dailySeries") is not None else None,
             "topCampaigns": [AnalyticsOverviewTopCampaignsInner.from_dict(_item) for _item in obj["topCampaigns"]] if obj.get("topCampaigns") is not None else None,
             "topLinks": [AnalyticsOverviewTopLinksInner.from_dict(_item) for _item in obj["topLinks"]] if obj.get("topLinks") is not None else None,
-            "recentActivity": [AnalyticsOverviewRecentActivityInner.from_dict(_item) for _item in obj["recentActivity"]] if obj.get("recentActivity") is not None else None
+            "recentActivity": [AnalyticsOverviewRecentActivityInner.from_dict(_item) for _item in obj["recentActivity"]] if obj.get("recentActivity") is not None else None,
+            "tracking": AnalyticsOverviewTracking.from_dict(obj["tracking"]) if obj.get("tracking") is not None else None,
+            "trackingDomains": [AnalyticsEngagementByTrackingDomainInner.from_dict(_item) for _item in obj["trackingDomains"]] if obj.get("trackingDomains") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

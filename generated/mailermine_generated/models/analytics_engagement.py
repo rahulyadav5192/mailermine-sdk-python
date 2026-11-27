@@ -18,7 +18,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from mailermine_generated.models.analytics_engagement_by_tracking_domain_inner import AnalyticsEngagementByTrackingDomainInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,13 +34,16 @@ class AnalyticsEngagement(BaseModel):
     unique_opens: StrictInt = Field(description="Unique opens.")
     clicks: StrictInt = Field(description="Total clicks.")
     unique_clicks: StrictInt = Field(description="Unique clicks.")
-    open_rate: Union[StrictFloat, StrictInt] = Field(description="Unique opens / delivered as a percentage.")
-    ctr: Union[StrictFloat, StrictInt] = Field(description="Click-through rate: clicks / delivered as a percentage.")
+    open_rate: Union[StrictFloat, StrictInt] = Field(description="Unique opens / delivered emails that had open tracking, as a percentage.")
+    ctr: Union[StrictFloat, StrictInt] = Field(description="Click-through rate: unique clicks / delivered emails that had click tracking, as a percentage.")
     ctor: Union[StrictFloat, StrictInt] = Field(description="Click-to-open rate: clicks / opens as a percentage.")
     sent: StrictInt = Field(description="Total sent.")
     delivered: StrictInt = Field(description="Total delivered.")
+    opens_tracked_delivered: Optional[StrictInt] = Field(default=None, description="Delivered emails that had open tracking (the open-rate denominator).")
+    clicks_tracked_delivered: Optional[StrictInt] = Field(default=None, description="Delivered emails that had click tracking (the CTR denominator).")
+    by_tracking_domain: Optional[List[AnalyticsEngagementByTrackingDomainInner]] = Field(default=None, description="Volume and engagement per custom tracking domain. The row with `hostname: null` is the shared host. Empty when no tracking domain is configured.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["from", "to", "opens", "unique_opens", "clicks", "unique_clicks", "open_rate", "ctr", "ctor", "sent", "delivered"]
+    __properties: ClassVar[List[str]] = ["from", "to", "opens", "unique_opens", "clicks", "unique_clicks", "open_rate", "ctr", "ctor", "sent", "delivered", "opens_tracked_delivered", "clicks_tracked_delivered", "by_tracking_domain"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -82,10 +86,32 @@ class AnalyticsEngagement(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in by_tracking_domain (list)
+        _items = []
+        if self.by_tracking_domain:
+            for _item_by_tracking_domain in self.by_tracking_domain:
+                if _item_by_tracking_domain:
+                    _items.append(_item_by_tracking_domain.to_dict())
+            _dict['by_tracking_domain'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if opens_tracked_delivered (nullable) is None
+        # and model_fields_set contains the field
+        if self.opens_tracked_delivered is None and "opens_tracked_delivered" in self.model_fields_set:
+            _dict['opens_tracked_delivered'] = None
+
+        # set to None if clicks_tracked_delivered (nullable) is None
+        # and model_fields_set contains the field
+        if self.clicks_tracked_delivered is None and "clicks_tracked_delivered" in self.model_fields_set:
+            _dict['clicks_tracked_delivered'] = None
+
+        # set to None if by_tracking_domain (nullable) is None
+        # and model_fields_set contains the field
+        if self.by_tracking_domain is None and "by_tracking_domain" in self.model_fields_set:
+            _dict['by_tracking_domain'] = None
 
         return _dict
 
@@ -109,7 +135,10 @@ class AnalyticsEngagement(BaseModel):
             "ctr": obj.get("ctr"),
             "ctor": obj.get("ctor"),
             "sent": obj.get("sent"),
-            "delivered": obj.get("delivered")
+            "delivered": obj.get("delivered"),
+            "opens_tracked_delivered": obj.get("opens_tracked_delivered"),
+            "clicks_tracked_delivered": obj.get("clicks_tracked_delivered"),
+            "by_tracking_domain": [AnalyticsEngagementByTrackingDomainInner.from_dict(_item) for _item in obj["by_tracking_domain"]] if obj.get("by_tracking_domain") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
