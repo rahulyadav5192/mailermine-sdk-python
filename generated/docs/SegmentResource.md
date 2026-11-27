@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** | Public segment UUID. @format uuid | 
 **name** | **str** | Project-unique segment name. @example Active customers | 
 **description** | **str** | Optional segment description. | 
-**rules** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**rules** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **contact_count** | **int** | Last evaluated matching contact count. @example 342 | 
 **created_at** | **str** | Creation time. @format date-time | 
 **updated_at** | **str** | Last update time. @format date-time | 

@@ -18,6 +18,7 @@ docs/AnalyticsDomainsResponse.md
 docs/AnalyticsEngagement.md
 docs/AnalyticsEngagementResponse.md
 docs/AnalyticsMessages.md
+docs/AnalyticsMessagesByStatus.md
 docs/AnalyticsMessagesDailyInner.md
 docs/AnalyticsMessagesResponse.md
 docs/AnalyticsMessagesTotals.md
@@ -172,7 +173,7 @@ docs/SegmentResponse.md
 docs/SegmentsApi.md
 docs/SendEmailRequest.md
 docs/SendEmailRequestAttachmentsInner.md
-docs/SendEmailRequestVariables.md
+docs/SendEmailRequestTracking.md
 docs/SendEmailResponse.md
 docs/Suppression.md
 docs/SuppressionListResponse.md
@@ -268,6 +269,7 @@ mailermine_generated/models/analytics_domains_response.py
 mailermine_generated/models/analytics_engagement.py
 mailermine_generated/models/analytics_engagement_response.py
 mailermine_generated/models/analytics_messages.py
+mailermine_generated/models/analytics_messages_by_status.py
 mailermine_generated/models/analytics_messages_daily_inner.py
 mailermine_generated/models/analytics_messages_response.py
 mailermine_generated/models/analytics_messages_totals.py
@@ -406,7 +408,7 @@ mailermine_generated/models/segment_resource.py
 mailermine_generated/models/segment_response.py
 mailermine_generated/models/send_email_request.py
 mailermine_generated/models/send_email_request_attachments_inner.py
-mailermine_generated/models/send_email_request_variables.py
+mailermine_generated/models/send_email_request_tracking.py
 mailermine_generated/models/send_email_response.py
 mailermine_generated/models/suppression.py
 mailermine_generated/models/suppression_list_response.py
@@ -477,6 +479,7 @@ test/test_analytics_domains_response.py
 test/test_analytics_engagement.py
 test/test_analytics_engagement_response.py
 test/test_analytics_messages.py
+test/test_analytics_messages_by_status.py
 test/test_analytics_messages_daily_inner.py
 test/test_analytics_messages_response.py
 test/test_analytics_messages_totals.py
@@ -632,7 +635,7 @@ test/test_segment_response.py
 test/test_segments_api.py
 test/test_send_email_request.py
 test/test_send_email_request_attachments_inner.py
-test/test_send_email_request_variables.py
+test/test_send_email_request_tracking.py
 test/test_send_email_response.py
 test/test_suppression.py
 test/test_suppression_list_response.py

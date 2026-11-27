@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **progress** | **int** | Completion percentage from 0 through 100. @example 65 | 
 **original_filename** | **str** | Uploaded source filename. @example contacts.xlsx | 
 **summary** | [**ImportJobSummary**](ImportJobSummary.md) |  | 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
-**counters** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**metadata** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
+**counters** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **has_failures** | **bool** | Whether a downloadable failure CSV exists. @example false | 
 **started_at** | **str** | Processing start time. @format date-time | 
 **completed_at** | **str** | Processing completion time. @format date-time | 

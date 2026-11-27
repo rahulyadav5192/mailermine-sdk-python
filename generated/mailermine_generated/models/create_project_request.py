@@ -20,7 +20,6 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -35,7 +34,7 @@ class CreateProjectRequest(BaseModel):
     environment: Optional[StrictStr] = Field(default=None, description="Runtime environment.")
     timezone: Optional[StrictStr] = Field(default=None, description="IANA timezone.")
     default_sender: Optional[Annotated[str, Field(strict=True, max_length=255)]] = Field(default=None, description="Default sender address hint.")
-    settings: Optional[SendEmailRequestVariables] = None
+    settings: Optional[Dict[str, Any]] = Field(default=None, description="Extensible project settings. `tracking.opens` and `tracking.clicks` (booleans, default true) set the project default for open and click tracking.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "slug", "description", "environment", "timezone", "default_sender", "settings"]
 
@@ -103,9 +102,6 @@ class CreateProjectRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of settings
-        if self.settings:
-            _dict['settings'] = self.settings.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -154,7 +150,7 @@ class CreateProjectRequest(BaseModel):
             "environment": obj.get("environment"),
             "timezone": obj.get("timezone"),
             "default_sender": obj.get("default_sender"),
-            "settings": SendEmailRequestVariables.from_dict(obj["settings"]) if obj.get("settings") is not None else None
+            "settings": obj.get("settings")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

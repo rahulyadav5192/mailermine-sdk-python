@@ -5,6 +5,30 @@ All notable changes to the MailerMine Python SDK are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-11-27
+
+### Added
+
+- `emails.send(..., tracking={"opens": ..., "clicks": ...})` turns open/click
+  tracking on or off for one email. Omitted keys use the project default.
+- Project `settings["tracking"]` (`opens`, `clicks`) sets a project's tracking
+  defaults on `projects.create()` / `update()`.
+- `WebhookEventPayload`, `WebhookClick` and `WebhookOpen` types. `email.clicked`
+  webhooks now include `click` (`url`, `link_id`, `is_unique`, `clicked_at`)
+  and `email.opened` includes `open` (`is_unique`, `opened_at`).
+
+### Fixed
+
+- `metadata`, `headers` and `variables` on `emails.send()`, and `settings` on
+  `projects.create()` / `update()`, were silently sent as `null`. The generated
+  request models used an `anyOf` wrapper that pydantic's request validation
+  turned into `None`; request bodies now use plain dict fields
+  (`scripts/openapi_normalize.py`).
+
+### Changed
+
+- Regenerated the client from the latest API spec (openapi-generator 7.23.0).
+
 ## [1.1.0] — 2026-11-17
 
 ### Added

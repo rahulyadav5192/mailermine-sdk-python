@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **environment** | **str** | Runtime environment. | [optional] 
 **timezone** | **str** | IANA timezone. | [optional] 
 **default_sender** | **str** | Default sender; null clears it. | [optional] 
-**settings** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**settings** | **Dict[str, object]** | Replacement settings object. | [optional] 
 **status** | **str** | Archive or restore the project. | [optional] 
 
 ## Example

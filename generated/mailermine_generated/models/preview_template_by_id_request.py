@@ -20,7 +20,6 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from uuid import UUID
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -30,7 +29,7 @@ class PreviewTemplateByIdRequest(BaseModel):
     PreviewTemplateByIdRequest
     """ # noqa: E501
     template_id: UUID = Field(description="Published template UUID.")
-    variables: Optional[SendEmailRequestVariables] = None
+    variables: Optional[Dict[str, Any]] = Field(default=None, description="Runtime values used to render placeholders.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["template_id", "variables"]
 
@@ -75,9 +74,6 @@ class PreviewTemplateByIdRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of variables
-        if self.variables:
-            _dict['variables'] = self.variables.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -96,7 +92,7 @@ class PreviewTemplateByIdRequest(BaseModel):
 
         _obj = cls.model_validate({
             "template_id": obj.get("template_id"),
-            "variables": SendEmailRequestVariables.from_dict(obj["variables"]) if obj.get("variables") is not None else None
+            "variables": obj.get("variables")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

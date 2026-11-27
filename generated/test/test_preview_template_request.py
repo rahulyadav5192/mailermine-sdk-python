@@ -35,7 +35,7 @@ class TestPreviewTemplateRequest(unittest.TestCase):
         model = PreviewTemplateRequest()
         if include_optional:
             return PreviewTemplateRequest(
-                variables = None
+                variables = { }
             )
         else:
             return PreviewTemplateRequest(

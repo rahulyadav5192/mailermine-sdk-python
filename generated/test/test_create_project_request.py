@@ -41,7 +41,7 @@ class TestCreateProjectRequest(unittest.TestCase):
                 environment = 'production',
                 timezone = '',
                 default_sender = '',
-                settings = None
+                settings = { }
             )
         else:
             return CreateProjectRequest(

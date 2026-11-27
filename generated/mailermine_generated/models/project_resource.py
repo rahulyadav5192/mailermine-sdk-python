@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -36,7 +36,7 @@ class ProjectResource(BaseModel):
     timezone: StrictStr = Field(description="IANA timezone. @example UTC")
     default_sender: Optional[StrictStr] = Field(description="Default sender address hint. @example hello@example.com")
     status: StrictStr = Field(description="Project lifecycle status. @var 'active'|'archived'|'inactive' @example active")
-    settings: SendEmailRequestVariables
+    settings: AnalyticsMessagesByStatus
     email_count: StrictInt = Field(description="Number of messages in the project. @example 1240")
     domain_count: StrictInt = Field(description="Number of sending domains. @example 2")
     api_key_count: StrictInt = Field(description="Number of API keys. @example 3")
@@ -134,7 +134,7 @@ class ProjectResource(BaseModel):
             "timezone": obj.get("timezone"),
             "default_sender": obj.get("default_sender"),
             "status": obj.get("status"),
-            "settings": SendEmailRequestVariables.from_dict(obj["settings"]) if obj.get("settings") is not None else None,
+            "settings": AnalyticsMessagesByStatus.from_dict(obj["settings"]) if obj.get("settings") is not None else None,
             "email_count": obj.get("email_count"),
             "domain_count": obj.get("domain_count"),
             "api_key_count": obj.get("api_key_count"),

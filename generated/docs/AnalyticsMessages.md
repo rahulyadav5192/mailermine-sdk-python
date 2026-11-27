@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **var_from** | **str** | Range start (ISO-8601). | 
 **to** | **str** | Range end (ISO-8601). | 
 **totals** | [**AnalyticsMessagesTotals**](AnalyticsMessagesTotals.md) |  | 
-**by_status** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**by_status** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **daily** | [**List[AnalyticsMessagesDailyInner]**](AnalyticsMessagesDailyInner.md) | Daily message metrics. | 
 
 ## Example

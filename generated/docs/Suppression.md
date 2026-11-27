@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **reason_label** | **str** | Human-readable reason label. | 
 **source** | **str** | Origin of the suppression (for example &#x60;bounce&#x60;, &#x60;manual&#x60;, &#x60;api&#x60;). | 
 **notes** | **str** | Optional operator notes. | 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**metadata** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **restored_at** | **str** | Time the suppression was restored (ISO-8601), or &#x60;null&#x60; if active. | 
 **created_at** | **str** | Creation timestamp (ISO-8601). | 
 **updated_at** | **str** | Last update timestamp (ISO-8601). | 

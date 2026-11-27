@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **template_id** | **UUID** | Published template UUID. | 
-**variables** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**variables** | **Dict[str, object]** | Runtime values used to render placeholders. | [optional] 
 
 ## Example
 

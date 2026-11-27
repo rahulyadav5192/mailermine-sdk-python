@@ -40,7 +40,7 @@ class TestUpdateContactRequest(unittest.TestCase):
                 last_name = '',
                 status = 'active',
                 subscribed = True,
-                metadata = None,
+                metadata = { },
                 list_ids = [
                     ''
                     ],
@@ -50,7 +50,7 @@ class TestUpdateContactRequest(unittest.TestCase):
                 tag_names = [
                     ''
                     ],
-                custom_fields = None
+                custom_fields = { }
             )
         else:
             return UpdateContactRequest(

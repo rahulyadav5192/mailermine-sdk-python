@@ -10,14 +10,15 @@ Name | Type | Description | Notes
 **cc** | **List[str]** | Carbon copy recipients. | [optional] 
 **bcc** | **List[str]** | Blind carbon copy recipients. | [optional] 
 **template_id** | **UUID** | Template UUID to render instead of inline content. | [optional] 
-**variables** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**variables** | **Dict[str, object]** | Template variables (key-value object). | [optional] 
 **subject** | **str** | Email subject. Required when not using a template. | [optional] 
 **html** | **str** | HTML body. Required with &#x60;text&#x60; when not using a template. | [optional] 
 **text** | **str** | Plain text body. Required with &#x60;html&#x60; when not using a template. | [optional] 
 **reply_to** | **str** | Reply-to address. | [optional] 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**metadata** | **Dict[str, object]** | Custom metadata stored with the message. | [optional] 
 **tags** | **List[str]** | Tags for filtering and analytics. | [optional] 
-**headers** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**headers** | **Dict[str, object]** | Custom email headers (requires &#x60;allow_custom_headers&#x60; plan capability). | [optional] 
+**tracking** | [**SendEmailRequestTracking**](SendEmailRequestTracking.md) |  | [optional] 
 **attachments** | [**List[SendEmailRequestAttachmentsInner]**](SendEmailRequestAttachmentsInner.md) | Base64-encoded file attachments. | [optional] 
 
 ## Example

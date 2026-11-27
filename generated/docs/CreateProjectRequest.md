@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **environment** | **str** | Runtime environment. | [optional] 
 **timezone** | **str** | IANA timezone. | [optional] 
 **default_sender** | **str** | Default sender address hint. | [optional] 
-**settings** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**settings** | **Dict[str, object]** | Extensible project settings. &#x60;tracking.opens&#x60; and &#x60;tracking.clicks&#x60; (booleans, default true) set the project default for open and click tracking. | [optional] 
 
 ## Example
 

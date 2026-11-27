@@ -19,9 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from mailermine_generated.models.import_job_summary import ImportJobSummary
 from mailermine_generated.models.import_progress import ImportProgress
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -35,8 +35,8 @@ class ImportJobDetail(BaseModel):
     progress: StrictInt = Field(description="Completion percentage from 0 through 100. @example 65")
     original_filename: StrictStr = Field(description="Uploaded source filename. @example contacts.xlsx")
     summary: Optional[ImportJobSummary]
-    metadata: SendEmailRequestVariables
-    counters: SendEmailRequestVariables
+    metadata: AnalyticsMessagesByStatus
+    counters: AnalyticsMessagesByStatus
     has_failures: StrictBool = Field(description="Whether a downloadable failure CSV exists. @example false")
     started_at: Optional[StrictStr] = Field(description="Processing start time. @format date-time")
     completed_at: Optional[StrictStr] = Field(description="Processing completion time. @format date-time")
@@ -146,8 +146,8 @@ class ImportJobDetail(BaseModel):
             "progress": obj.get("progress"),
             "original_filename": obj.get("original_filename"),
             "summary": ImportJobSummary.from_dict(obj["summary"]) if obj.get("summary") is not None else None,
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
-            "counters": SendEmailRequestVariables.from_dict(obj["counters"]) if obj.get("counters") is not None else None,
+            "metadata": AnalyticsMessagesByStatus.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "counters": AnalyticsMessagesByStatus.from_dict(obj["counters"]) if obj.get("counters") is not None else None,
             "has_failures": obj.get("has_failures"),
             "started_at": obj.get("started_at"),
             "completed_at": obj.get("completed_at"),

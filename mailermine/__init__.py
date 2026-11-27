@@ -62,7 +62,14 @@ from mailermine.resources import (
 from mailermine.support import Collection, Pagination, Response
 from mailermine.support.rate_limit import RateLimitInfo
 from mailermine.support.scopes import ScopePresets, Scopes
-from mailermine.types import JsonObject, JsonPrimitive, JsonValue
+from mailermine.types import (
+    JsonObject,
+    JsonPrimitive,
+    JsonValue,
+    WebhookClick,
+    WebhookEventPayload,
+    WebhookOpen,
+)
 
 __all__ = [
     "DEFAULT_BASE_URL",
@@ -107,5 +114,8 @@ __all__ = [
     "Tags",
     "Templates",
     "ValidationError",
+    "WebhookClick",
+    "WebhookEventPayload",
+    "WebhookOpen",
     "Webhooks",
 ]

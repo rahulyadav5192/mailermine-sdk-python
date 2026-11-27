@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **cc** | **List[str]** | Carbon copy recipients. | 
 **bcc** | **List[str]** | Blind carbon copy recipients. | 
 **reply_to** | **str** |  | 
-**headers** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**headers** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **subject** | **str** |  | 
 **status** | [**MessageStatus**](MessageStatus.md) | Delivery status. | 
 **status_label** | **str** |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **provider_label** | **str** |  | 
 **provider_message_id** | **str** |  | 
 **error_message** | **str** |  | 
-**metadata** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | 
+**metadata** | [**AnalyticsMessagesByStatus**](AnalyticsMessagesByStatus.md) |  | 
 **tags** | **List[str]** | Tags for filtering and analytics. | 
 **attachments** | [**List[EmailAttachment]**](EmailAttachment.md) |  | 
 **scheduled_at** | **str** |  | 

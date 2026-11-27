@@ -99,9 +99,70 @@ def normalize_openapi_document(document: dict[str, Any]) -> dict[str, Any]:
             _normalize_schema(schema)
 
     _apply_known_schema_fixes(schemas)
+    _plain_free_form_objects_in_request_bodies(normalized)
     _fix_import_upload_multipart(normalized)
     _add_campaign_recipients_per_page(normalized)
     return normalized
+
+
+def _request_body_schema_names(document: dict[str, Any]) -> set[str]:
+    """Names of component schemas used as JSON request bodies."""
+    names: set[str] = set()
+    for path_item in (document.get("paths") or {}).values():
+        if not isinstance(path_item, dict):
+            continue
+        for operation in path_item.values():
+            if not isinstance(operation, dict):
+                continue
+            content = (operation.get("requestBody") or {}).get("content") or {}
+            if not isinstance(content, dict):
+                continue
+            for media in content.values():
+                ref = ((media or {}).get("schema") or {}).get("$ref")
+                if isinstance(ref, str) and ref.startswith("#/components/schemas/"):
+                    names.add(ref.rsplit("/", 1)[-1])
+    return names
+
+
+def _is_free_form_any_of(prop: dict[str, Any]) -> bool:
+    """True for the ``_object_schema`` shape: object | empty array [| null]."""
+    variants = prop.get("anyOf")
+    if not isinstance(variants, list):
+        return False
+    kinds = {v.get("type") for v in variants if isinstance(v, dict)}
+    has_free_object = any(
+        isinstance(v, dict) and v.get("type") == "object" and v.get("additionalProperties") is True
+        for v in variants
+    )
+    return has_free_object and kinds <= {"object", "array", "null"}
+
+
+def _plain_free_form_objects_in_request_bodies(document: dict[str, Any]) -> None:
+    """Use plain ``object`` maps (not anyOf wrappers) for request-body fields.
+
+    The empty-array (``[]``) variant only matters for responses (PHP encodes
+    empty maps as ``[]``). On requests, the generated ``@validate_call`` runs
+    pydantic ``model_validate`` on the anyOf wrapper, which turns a plain dict
+    into ``None``: ``metadata``, ``headers``, ``variables`` and project
+    ``settings`` were silently dropped. A plain ``Dict[str, Any]`` keeps them.
+    """
+    schemas = (document.get("components") or {}).get("schemas") or {}
+    for name in _request_body_schema_names(document):
+        schema = schemas.get(name)
+        props = schema.get("properties") if isinstance(schema, dict) else None
+        if not isinstance(props, dict):
+            continue
+        for field_name, prop in list(props.items()):
+            if not isinstance(prop, dict) or not _is_free_form_any_of(prop):
+                continue
+            nullable = any(isinstance(v, dict) and v.get("type") == "null" for v in prop["anyOf"])
+            plain: dict[str, Any] = {
+                "type": ["object", "null"] if nullable else "object",
+                "additionalProperties": True,
+            }
+            if prop.get("description"):
+                plain["description"] = prop["description"]
+            props[field_name] = plain
 
 
 def _normalize_schema(schema: dict[str, Any]) -> None:
@@ -237,6 +298,21 @@ def _apply_known_schema_fixes(schemas: dict[str, Any]) -> None:
                 if not isinstance(field, dict):
                     continue
                 props[field_name] = _make_nullable(field)
+
+    # Project ``settings`` documents an optional ``tracking`` object but stays an
+    # open map (environment, timezone, default_sender, custom keys). Typed as a
+    # model, ``@validate_call`` would drop the undeclared keys, so keep the same
+    # free-form dict the SDK used before ``tracking`` was documented.
+    for schema_name in ("CreateProjectRequest", "UpdateProjectRequest"):
+        project_request = schemas.get(schema_name)
+        if not isinstance(project_request, dict):
+            continue
+        props = project_request.get("properties")
+        if isinstance(props, dict) and isinstance(props.get("settings"), dict):
+            props["settings"] = _object_schema(
+                description=str(props["settings"].get("description") or "Project settings."),
+                nullable=False,
+            )
 
     # ConfigureContactImportRequest.field_mappings is documented as string[] but the
     # live API (and Laravel/Node SDKs) accept a column→field object map.

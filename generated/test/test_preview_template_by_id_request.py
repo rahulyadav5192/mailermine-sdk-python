@@ -36,7 +36,7 @@ class TestPreviewTemplateByIdRequest(unittest.TestCase):
         if include_optional:
             return PreviewTemplateByIdRequest(
                 template_id = '',
-                variables = None
+                variables = { }
             )
         else:
             return PreviewTemplateByIdRequest(

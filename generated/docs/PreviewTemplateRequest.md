@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**variables** | [**SendEmailRequestVariables**](SendEmailRequestVariables.md) |  | [optional] 
+**variables** | **Dict[str, object]** | Runtime values used to render placeholders. | [optional] 
 
 ## Example
 

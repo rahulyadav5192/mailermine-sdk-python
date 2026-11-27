@@ -19,9 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from mailermine_generated.models.campaign_activity_payload import CampaignActivityPayload
 from mailermine_generated.models.message_status import MessageStatus
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -39,7 +39,7 @@ class DeliveryLog(BaseModel):
     provider: StrictStr
     provider_message_id: Optional[StrictStr]
     error_message: Optional[StrictStr]
-    metadata: SendEmailRequestVariables
+    metadata: AnalyticsMessagesByStatus
     tags: List[StrictStr]
     sent_at: Optional[StrictStr]
     created_at: Optional[StrictStr]
@@ -157,7 +157,7 @@ class DeliveryLog(BaseModel):
             "provider": obj.get("provider"),
             "provider_message_id": obj.get("provider_message_id"),
             "error_message": obj.get("error_message"),
-            "metadata": SendEmailRequestVariables.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
+            "metadata": AnalyticsMessagesByStatus.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None,
             "tags": obj.get("tags"),
             "sent_at": obj.get("sent_at"),
             "created_at": obj.get("created_at"),

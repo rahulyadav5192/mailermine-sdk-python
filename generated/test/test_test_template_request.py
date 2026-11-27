@@ -37,7 +37,7 @@ class TestTestTemplateRequest(unittest.TestCase):
             return TestTemplateRequest(
                 to = '',
                 email = '',
-                variables = None,
+                variables = { },
                 subject = ''
             )
         else:

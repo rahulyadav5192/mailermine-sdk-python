@@ -24,11 +24,11 @@ from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-SENDEMAILREQUESTVARIABLES_ANY_OF_SCHEMAS = ["Dict[str, object]", "List[object]"]
+ANALYTICSMESSAGESBYSTATUS_ANY_OF_SCHEMAS = ["Dict[str, object]", "List[object]"]
 
-class SendEmailRequestVariables(BaseModel):
+class AnalyticsMessagesByStatus(BaseModel):
     """
-    Template variables (key-value object).
+    Message count keyed by status.
     """
 
     # data type: Dict[str, object]
@@ -58,7 +58,7 @@ class SendEmailRequestVariables(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = SendEmailRequestVariables.model_construct()
+        instance = AnalyticsMessagesByStatus.model_construct()
         error_messages = []
         # validate data type: Dict[str, object]
         try:
@@ -74,7 +74,7 @@ class SendEmailRequestVariables(BaseModel):
             error_messages.append(str(e))
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in SendEmailRequestVariables with anyOf schemas: Dict[str, object], List[object]. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in AnalyticsMessagesByStatus with anyOf schemas: Dict[str, object], List[object]. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -108,7 +108,7 @@ class SendEmailRequestVariables(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into SendEmailRequestVariables with anyOf schemas: Dict[str, object], List[object]. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into AnalyticsMessagesByStatus with anyOf schemas: Dict[str, object], List[object]. Details: " + ", ".join(error_messages))
         else:
             return instance
 

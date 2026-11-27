@@ -19,9 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
+from mailermine_generated.models.analytics_messages_by_status import AnalyticsMessagesByStatus
 from mailermine_generated.models.analytics_messages_daily_inner import AnalyticsMessagesDailyInner
 from mailermine_generated.models.analytics_messages_totals import AnalyticsMessagesTotals
-from mailermine_generated.models.send_email_request_variables import SendEmailRequestVariables
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,7 +33,7 @@ class AnalyticsMessages(BaseModel):
     var_from: StrictStr = Field(description="Range start (ISO-8601).", alias="from")
     to: StrictStr = Field(description="Range end (ISO-8601).")
     totals: AnalyticsMessagesTotals
-    by_status: SendEmailRequestVariables
+    by_status: AnalyticsMessagesByStatus
     daily: List[AnalyticsMessagesDailyInner] = Field(description="Daily message metrics.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["from", "to", "totals", "by_status", "daily"]
@@ -112,7 +112,7 @@ class AnalyticsMessages(BaseModel):
             "from": obj.get("from"),
             "to": obj.get("to"),
             "totals": AnalyticsMessagesTotals.from_dict(obj["totals"]) if obj.get("totals") is not None else None,
-            "by_status": SendEmailRequestVariables.from_dict(obj["by_status"]) if obj.get("by_status") is not None else None,
+            "by_status": AnalyticsMessagesByStatus.from_dict(obj["by_status"]) if obj.get("by_status") is not None else None,
             "daily": [AnalyticsMessagesDailyInner.from_dict(_item) for _item in obj["daily"]] if obj.get("daily") is not None else None
         })
         # store additional fields in additional_properties

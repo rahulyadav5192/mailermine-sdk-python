@@ -41,7 +41,7 @@ class TestCreateContactRequest(unittest.TestCase):
                 status = 'active',
                 subscribed = True,
                 source = 'api',
-                metadata = None,
+                metadata = { },
                 list_ids = [
                     ''
                     ],
@@ -51,7 +51,7 @@ class TestCreateContactRequest(unittest.TestCase):
                 tag_names = [
                     ''
                     ],
-                custom_fields = None
+                custom_fields = { }
             )
         else:
             return CreateContactRequest(
